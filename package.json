@@ -1,0 +1,20 @@
+{
+  "name": "prometeo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monorepo fullstack Prometeo — React + Vite (frontend) y Express + MongoDB Atlas (backend), gestionado con pnpm workspaces.",
+  "scripts": {
+    "dev": "concurrently -n FRONTEND,BACKEND -c blue,green \"pnpm dev:frontend\" \"pnpm dev:backend\"",
+    "dev:frontend": "pnpm --filter prometeo-frontend dev",
+    "dev:backend": "pnpm --filter prometeo-backend dev",
+    "build": "pnpm --filter prometeo-frontend build",
+    "start:backend": "pnpm --filter prometeo-backend start",
+    "lint": "pnpm --filter prometeo-frontend lint"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
