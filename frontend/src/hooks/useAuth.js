@@ -12,7 +12,7 @@ import { useState } from 'react';
 export const useAuth = () => {
   // Valores estáticos de prueba (puedes cambiarlos manualemente para probar las rutas)
   const [authState] = useState({
-    isAuthenticated: true, 
+    isAuthenticated: false, 
     accountType: 'admin', // 'admin' | 'user'
     role: 'property', // 'property' | 'employee'
     hasBusiness: true, // Si el admin ya registró su negocio

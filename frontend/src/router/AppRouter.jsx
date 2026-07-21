@@ -18,6 +18,7 @@ const ContactUs = lazy(() => import('../pages/Landing-page/ContactUs/ContactUs.j
 
 const Login = lazy(() => import('../pages/Login/Login.jsx').then(m => ({ default: m.Login })));
 const ForgotPassword = lazy(() => import('../pages/ForgotPassword/ForgotPassword.jsx').then(m => ({ default: m.ForgotPassword })));
+const ResetPassword = lazy(() => import('../pages/ResetPassword/ResetPassword.jsx').then(m => ({ default: m.ResetPassword })));
 const Signup = lazy(() => import('../pages/admins/properties/signup/Signup.jsx').then(m => ({ default: m.Signup })));
 
 const RegisterBusiness = lazy(() => import('../pages/admins/properties/register-business/RegisterBusiness.jsx').then(m => ({ default: m.RegisterBusiness })));
@@ -50,6 +51,7 @@ export const AppRouter = () => (
       <Route element={<PublicRoute />}>
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/properties/signup" element={<Signup />} />
       </Route>
 
