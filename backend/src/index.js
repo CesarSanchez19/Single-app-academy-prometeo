@@ -1,44 +1,62 @@
+import { env } from "./config/env.js";
+
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
-import dotenv from "dotenv";
-import path from "path";
-import { fileURLToPath } from "url";
+import mongoose from "mongoose";
 
 import { connectDB } from "./config/db.js";
 import mainRouter from "./routes/index.js";
 import { notFoundHandler, errorHandler } from "./middlewares/errorHandler.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-dotenv.config({ path: path.resolve(__dirname, "../../.env") });
-
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(helmet());
 app.use(compression());
-app.use(cors({ origin: process.env.CORS_ORIGIN || "http://localhost:5173" }));
+
+app.use(
+  cors({
+    origin: env.corsOrigin,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-app.use("/api", mainRouter);
+if (env.isDevelopment) {
+  app.use((req, res, next) => {
+    const start = Date.now();
+    res.on("finish", () => {
+      const duration = Date.now() - start;
+      console.log(
+        `${req.method} ${req.originalUrl} → ${res.statusCode} (${duration}ms)`
+      );
+    });
+    next();
+  });
+}
+
+app.use("/api/v1", mainRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
 
 const startServer = async () => {
-  await connectDB();
+  await connectDB(env.mongodbUri);
 
-  const server = app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  const server = app.listen(env.port, () => {
+    console.log(
+      `Servidor corriendo en http://localhost:${env.port} [${env.nodeEnv}]`
+    );
   });
 
   const shutdown = async (signal) => {
     console.log(`\n${signal} recibido. Cerrando servidor...`);
     server.close(async () => {
-      const { default: mongoose } = await import("mongoose");
       await mongoose.connection.close();
       console.log("Conexiones cerradas. Proceso terminado.");
       process.exit(0);
