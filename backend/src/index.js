@@ -50,15 +50,15 @@ const startServer = async () => {
 
   const server = app.listen(env.port, () => {
     console.log(
-      `Servidor corriendo en http://localhost:${env.port} [${env.nodeEnv}]`
+      `Server running on http://localhost:${env.port} [${env.nodeEnv}]`
     );
   });
 
   const shutdown = async (signal) => {
-    console.log(`\n${signal} recibido. Cerrando servidor...`);
+    console.log(`\n${signal} received. Closing server...`);
     server.close(async () => {
       await mongoose.connection.close();
-      console.log("Conexiones cerradas. Proceso terminado.");
+      console.log("Connections closed. Process terminated.");
       process.exit(0);
     });
   };
@@ -68,6 +68,6 @@ const startServer = async () => {
 };
 
 startServer().catch((err) => {
-  console.error("Error fatal al iniciar el servidor:", err);
+  console.error("Fatal error starting the server:", err);
   process.exit(1);
 });
