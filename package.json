@@ -9,6 +9,7 @@
     "dev:backend": "pnpm --filter prometeo-backend dev",
     "build": "pnpm --filter prometeo-frontend build",
     "start:backend": "pnpm --filter prometeo-backend start",
+    "seed": "pnpm --filter prometeo-backend seed",
     "lint": "pnpm --filter prometeo-frontend lint"
   },
   "devDependencies": {
