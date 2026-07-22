@@ -1,4 +1,9 @@
-import { loginUser, registerUser } from "../services/auth.service.js";
+import {
+  loginUser,
+  registerUser,
+  forgotPassword as forgotPasswordService,
+  resetPassword as resetPasswordService,
+} from "../services/auth.service.js";
 import { ConflictError, ValidationError } from "../utils/errors.js";
 
 export const register = async (req, res, next) => {
@@ -110,6 +115,98 @@ export const login = async (req, res, next) => {
         success: false,
         code: "ACCOUNT_SUSPENDED",
         message: error.message,
+      });
+    }
+
+    next(error);
+  }
+};
+
+export const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        code: "VALIDATION_ERROR",
+        message: "Email is required",
+      });
+    }
+
+    const emailRegex = /^\S+@\S+\.\S+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        code: "VALIDATION_ERROR",
+        message: "Please provide a valid email address",
+      });
+    }
+
+    await forgotPasswordService({ email });
+
+    return res.status(200).json({
+      success: true,
+      message:
+        "If an account with that email exists, we have sent a password recovery link.",
+      data: null,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resetPassword = async (req, res, next) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        code: "VALIDATION_ERROR",
+        message: "Token and new password are required",
+      });
+    }
+
+    await resetPasswordService({ token, newPassword });
+
+    return res.status(200).json({
+      success: true,
+      message:
+        "Your password has been reset successfully. You can now log in with your new password.",
+      data: null,
+    });
+  } catch (error) {
+    if (error.code === "TOKEN_EXPIRED") {
+      return res.status(400).json({
+        success: false,
+        code: "TOKEN_EXPIRED",
+        message: error.message,
+      });
+    }
+
+    if (error.code === "TOKEN_USED") {
+      return res.status(400).json({
+        success: false,
+        code: "TOKEN_USED",
+        message: error.message,
+      });
+    }
+
+    if (error.code === "TOKEN_INVALID") {
+      return res.status(400).json({
+        success: false,
+        code: "TOKEN_INVALID",
+        message: error.message,
+      });
+    }
+
+    if (error instanceof ValidationError) {
+      return res.status(400).json({
+        success: false,
+        code: "VALIDATION_ERROR",
+        message: error.message,
+        ...(error.errors?.length && { errors: error.errors }),
       });
     }
 
