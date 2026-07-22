@@ -138,14 +138,20 @@ The script is idempotent — running it multiple times will skip existing accoun
 **Frontend**
 - [React](https://react.dev/) - UI Library
 - [Vite](https://vitejs.dev/) - Bundler and development server
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS styling framework
+- [React Router](https://reactrouter.com/) - Client-side routing
+- [Lucide React](https://lucide.dev/) - Icon library
 
 **Backend**
 - [Node.js](https://nodejs.org/) - Runtime environment
 - [Express](https://expressjs.com/) - Web framework
-- [MongoDB](https://www.mongodb.com/) - NoSQL Database
-- [Mongoose](https://mongoosejs.com/) - MongoDB object modeling
-- [CORS](https://www.npmjs.com/package/cors) - Cross-Origin Resource Sharing
-- [dotenv](https://www.npmjs.com/package/dotenv) - Environment variables
+- [MongoDB](https://www.mongodb.com/) & [Mongoose](https://mongoosejs.com/) - NoSQL Database & Object Modeling
+- [Resend](https://resend.com/) - Email delivery API
+- [React Email](https://react.email/) - Email template building
+- [Bcrypt](https://www.npmjs.com/package/bcrypt) - Password hashing
+- [JSON Web Token (JWT)](https://jwt.io/) - Authentication & Authorization
+- [Helmet](https://helmetjs.github.io/) - Security middleware
+- [CORS](https://www.npmjs.com/package/cors) & [dotenv](https://www.npmjs.com/package/dotenv) - Cross-Origin Resource Sharing & Environment variables
 
 **Tooling**
 - [pnpm](https://pnpm.io/) - Package manager with workspaces support
