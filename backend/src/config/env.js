@@ -7,7 +7,7 @@ const envPath = path.resolve(__dirname, "../../../.env");
 
 dotenv.config({ path: envPath });
 
-const REQUIRED_VARS = ["MONGODB_URI"];
+const REQUIRED_VARS = ["MONGODB_URI", "JWT_SECRET"];
 
 const missing = REQUIRED_VARS.filter((key) => !process.env[key]);
 
@@ -26,6 +26,11 @@ export const env = Object.freeze({
   nodeEnv: process.env.NODE_ENV || "development",
   mongodbUri: process.env.MONGODB_URI,
   corsOrigin: process.env.CORS_ORIGIN || "http://localhost:5173",
+
+  jwtSecret: process.env.JWT_SECRET,
+  jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET,
+  jwtAccessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN || "15m",
+  jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || "60d",
 
   get isProduction() {
     return this.nodeEnv === "production";

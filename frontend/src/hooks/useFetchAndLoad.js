@@ -4,12 +4,12 @@ export const useFetchAndLoad = () => {
   const [isLoading, setIsLoading] = useState(false);
   let controller;
 
-  const callEndpoint = async (axiosCall) => {
-    if (axiosCall.controller) controller = axiosCall.controller;
+  const callEndpoint = async (apiCall) => {
+    if (apiCall.controller) controller = apiCall.controller;
     setIsLoading(true);
 
     try {
-      const result = await axiosCall.call;
+      const result = await apiCall.call;
       return result;
     } catch (err) {
       throw err;

@@ -10,13 +10,13 @@ export const useHealth = () => {
 
   const loadHealth = async () => {
     try {
-      const { data } = await callEndpoint(checkHealth());
+      const data = await callEndpoint(checkHealth());
       setHealth(healthAdapter(data));
     } catch (err) {
-      if (err.name !== "CanceledError") {
+      if (err.name !== "AbortError") {
         setError(
-          "No se pudo conectar con el backend" +
-            (err.response ? `: ${err.response.data.message}` : ""),
+          "Could not connect to backend" +
+            (err.message ? `: ${err.message}` : "")
         );
       }
     }
