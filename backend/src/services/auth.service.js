@@ -6,6 +6,55 @@ import { UAParser } from "ua-parser-js";
 import { env } from "../config/env.js";
 import User from "../models/User.js";
 import Token from "../models/Token.js";
+import { ConflictError, ValidationError } from "../utils/errors.js";
+
+const PASSWORD_RULES = {
+  minLength: 8,
+  uppercase: /[A-Z]/,
+  number: /\d/,
+};
+
+export const registerUser = async ({ name, lastname, email, password }) => {
+  const errors = [];
+
+  if (!name || !lastname || !email || !password) {
+    throw new ValidationError("All fields are required");
+  }
+
+  if (password.length < PASSWORD_RULES.minLength) {
+    errors.push("Password must be at least 8 characters long");
+  }
+  if (!PASSWORD_RULES.uppercase.test(password)) {
+    errors.push("Password must contain at least one uppercase letter");
+  }
+  if (!PASSWORD_RULES.number.test(password)) {
+    errors.push("Password must contain at least one number");
+  }
+
+  if (errors.length > 0) {
+    throw new ValidationError("Password does not meet requirements", errors);
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  try {
+    const user = await User.create({
+      name: name.trim(),
+      lastname: lastname.trim(),
+      email: email.toLowerCase().trim(),
+      hashedPassword,
+    });
+
+    return user.toJSON();
+  } catch (error) {
+    if (error.code === 11000) {
+      throw new ConflictError(
+        "This email is already registered. Try logging in."
+      );
+    }
+    throw error;
+  }
+};
 
 export const loginUser = async ({ email, password, userAgent = "" }) => {
   const user = await User.findOne({ email }).select("+hashedPassword");
