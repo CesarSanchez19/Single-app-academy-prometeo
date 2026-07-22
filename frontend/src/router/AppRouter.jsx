@@ -65,6 +65,7 @@ const UserProfile = lazy(() =>
 export const AppRouter = () => (
   <Suspense fallback={<PageSpinner />}>
     <Routes>
+      {/* Público: Home + AboutUs */}
       <Route element={<PublicLayout />}>
         <Route index element={<Home />} />
         <Route path="about-us" element={<AboutUs />} />
