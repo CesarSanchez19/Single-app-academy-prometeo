@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
+import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 
 import { connectDB } from "./config/db.js";
@@ -14,6 +15,7 @@ const app = express();
 
 app.use(helmet());
 app.use(compression());
+app.use(cookieParser());
 
 app.use(
   cors({

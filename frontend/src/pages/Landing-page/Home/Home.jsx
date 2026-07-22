@@ -4,9 +4,9 @@ export const Home = () => {
   const { health, isLoading, error } = useHealth();
 
   const renderStatus = () => {
-    if (isLoading) return <span className="text-muted">Verificando conexión...</span>;
+    if (isLoading) return <span className="text-muted">Checking connection...</span>;
     if (error) return <span style={{ color: 'var(--color-danger)' }}>{error}</span>;
-    return <span style={{ color: 'var(--color-success)', fontWeight: 500 }}>{health?.message ?? "Sin datos"}</span>;
+    return <span style={{ color: 'var(--color-success)', fontWeight: 500 }}>{health?.message ?? "No data"}</span>;
   };
 
   return (
@@ -15,12 +15,12 @@ export const Home = () => {
       <p className="text-muted mb-4">Monorepo React + Vite / Express + MongoDB Atlas</p>
       
       <div style={{ padding: '16px', backgroundColor: 'var(--color-background)', borderRadius: 'var(--radius-md)' }}>
-        <p>Estado del backend: {renderStatus()}</p>
+        <p>Backend status: {renderStatus()}</p>
       </div>
       
       <div className="flex justify-center gap-4 mt-4">
-        <button className="btn btn-primary">Empezar</button>
-        <button className="btn btn-outline">Documentación</button>
+        <button className="btn btn-primary">Get Started</button>
+        <button className="btn btn-outline">Documentation</button>
       </div>
     </div>
   );

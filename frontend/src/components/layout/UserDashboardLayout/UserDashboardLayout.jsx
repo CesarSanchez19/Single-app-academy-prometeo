@@ -1,10 +1,12 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Home, Users, Briefcase, User, LogOut } from 'lucide-react';
+import { Home, User, LogOut } from 'lucide-react';
 import '../DashboardLayout.css';
+import { useAuth } from '@hooks/useAuth.js';
 
 export const UserDashboardLayout = () => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const { logout } = useAuth();
 
   const NavItem = ({ to, icon: Icon, label }) => {
     const isActive = currentPath.startsWith(to);
@@ -21,21 +23,15 @@ export const UserDashboardLayout = () => {
       <aside className="sidebar">
         <div className="sidebar-header">
           <div className="sidebar-brand">
-            <span className="brand-text" style={{ color: 'var(--color-success)' }}>Employee Portal</span>
+            <span className="brand-text" style={{ color: 'var(--color-success)' }}>User Portal</span>
           </div>
         </div>
         
         <div className="sidebar-content">
           <div className="sidebar-section">
-            <div className="sidebar-subtitle">Mi Trabajo</div>
-            <NavItem to="/employees/home" icon={Home} label="Inicio" />
-            <NavItem to="/employees/clients" icon={Users} label="Mis Clientes" />
-            <NavItem to="/employees/services" icon={Briefcase} label="Mis Servicios" />
-          </div>
-          
-          <div className="sidebar-section">
-            <div className="sidebar-subtitle">Cuenta</div>
-            <NavItem to="/employees/profile" icon={User} label="Mi Perfil" />
+            <div className="sidebar-subtitle">General</div>
+            <NavItem to="/user/home" icon={Home} label="Dashboard" />
+            <NavItem to="/user/profile" icon={User} label="Profile" />
           </div>
         </div>
       </aside>
@@ -44,7 +40,7 @@ export const UserDashboardLayout = () => {
         <header className="topbar">
           <div></div>
           <div className="topbar-actions">
-            <button className="btn btn-icon">
+            <button className="btn btn-icon" onClick={logout}>
               <LogOut size={20} />
             </button>
           </div>

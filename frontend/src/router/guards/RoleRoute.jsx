@@ -1,14 +1,10 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth.js';
+import { useAuth } from '@hooks/useAuth.js';
 
-export const RoleRoute = ({ accountType, role }) => {
+export const RoleRoute = ({ role }) => {
   const auth = useAuth();
 
-  if (accountType && auth.accountType !== accountType) {
-    return <Navigate to="/" replace />; 
-  }
-
-  if (role && auth.role !== role) {
+  if (role && auth.user?.role !== role) {
     return <Navigate to="/" replace />;
   }
 
