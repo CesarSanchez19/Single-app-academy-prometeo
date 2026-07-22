@@ -1,5 +1,5 @@
-﻿import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, UserPlus } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, KeyRound } from "lucide-react";
 import {
   pageClass,
   backdropClass,
@@ -19,9 +19,9 @@ import {
   submitButtonClass,
   footerClass,
   footerTextClass,
-} from "@pages/auth/authClasses.js";
+} from "@/styles/prometeoStyleClasses.js";
 
-export const Signup = () => {
+export const ResetPassword = () => {
   const navigate = useNavigate();
 
   return (
@@ -31,11 +31,11 @@ export const Signup = () => {
       <header className={headerClass}>
         <button
           type="button"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/login")}
           className={backButtonClass}
         >
           <ArrowLeft size={16} strokeWidth={2} aria-hidden="true" />
-          <span>Back to home</span>
+          <span>Volver al inicio de sesión</span>
         </button>
       </header>
 
@@ -43,43 +43,16 @@ export const Signup = () => {
         <div className={cardClass}>
           <div className={introClass}>
             <span className={eyebrowClass}>Prometeo</span>
-            <h1 className={titleClass}>Create your account</h1>
+            <h1 className={titleClass}>Reset your password</h1>
             <p className={descriptionClass}>
-              Register your business to start managing sessions, clients and
-              employees.
+              Enter your new password. Make sure it has at least 8 characters.
             </p>
           </div>
 
           <form className={formClass} onSubmit={(e) => e.preventDefault()}>
             <div className={fieldClass}>
-              <label htmlFor="name" className={labelClass}>
-                Full name
-              </label>
-              <input
-                type="text"
-                id="name"
-                className={inputClass}
-                placeholder="Your name"
-                autoComplete="name"
-              />
-            </div>
-
-            <div className={fieldClass}>
-              <label htmlFor="email" className={labelClass}>
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                className={inputClass}
-                placeholder="your@email.com"
-                autoComplete="email"
-              />
-            </div>
-
-            <div className={fieldClass}>
               <label htmlFor="password" className={labelClass}>
-                Password
+                New password
               </label>
               <input
                 type="password"
@@ -104,14 +77,14 @@ export const Signup = () => {
             </div>
 
             <button type="submit" className={submitButtonClass}>
-              <UserPlus size={18} strokeWidth={2} aria-hidden="true" />
-              Create account
+              <KeyRound size={18} strokeWidth={2} aria-hidden="true" />
+              Reset password
             </button>
           </form>
 
           <footer className={footerClass}>
             <p className={footerTextClass}>
-              Already have an account?{" "}
+              Forgot your password?{" "}
               <Link to="/login" className={linkAccentClass}>
                 Log in
               </Link>

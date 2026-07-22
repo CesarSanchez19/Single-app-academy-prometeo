@@ -1,9 +1,8 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, LogIn, Loader2 } from "lucide-react";
 import { useAuth } from "@hooks/useAuth.js";
 import { login as loginService } from "@services/auth.service.js";
-
 import {
   pageClass,
   backdropClass,
@@ -25,7 +24,7 @@ import {
   submitButtonClass,
   footerClass,
   footerTextClass,
-} from "@pages/auth/authClasses.js";
+} from "@/styles/prometeoStyleClasses.js";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -55,7 +54,7 @@ export const Login = () => {
 
     try {
       const data = await loginService(email, password);
-      
+
       setAuthContext({ accessToken: data.accessToken, user: data.user });
 
       if (data.user.role === "admin") {
@@ -68,9 +67,15 @@ export const Login = () => {
       if (code === "INVALID_CREDENTIALS") {
         setError({ type: "credentials", message: "Invalid email or password" });
       } else if (code === "ACCOUNT_SUSPENDED") {
-        setError({ type: "suspended", message: "Your account is suspended. Contact an administrator." });
+        setError({
+          type: "suspended",
+          message: "Your account is suspended. Contact an administrator.",
+        });
       } else {
-        setError({ type: "network", message: "Could not connect to server. Please try again later." });
+        setError({
+          type: "network",
+          message: "Could not connect to server. Please try again later.",
+        });
       }
     } finally {
       setIsLoading(false);
@@ -143,8 +148,8 @@ export const Login = () => {
             {error && (
               <div
                 className={`text-[13px] font-medium p-3 rounded-md ${
-                  error.type === "suspended" 
-                    ? "bg-amber-50 text-amber-800 border border-amber-200" 
+                  error.type === "suspended"
+                    ? "bg-amber-50 text-amber-800 border border-amber-200"
                     : "bg-red-50 text-red-600 border border-red-100"
                 }`}
                 role="alert"
@@ -153,14 +158,19 @@ export const Login = () => {
               </div>
             )}
 
-            <button 
-              type="submit" 
-              className={`${submitButtonClass} ${isLoading ? 'opacity-75 cursor-not-allowed' : ''}`}
+            <button
+              type="submit"
+              className={`${submitButtonClass} ${isLoading ? "opacity-75 cursor-not-allowed" : ""}`}
               disabled={isLoading}
             >
               {isLoading ? (
                 <>
-                  <Loader2 size={18} strokeWidth={2} className="animate-spin" aria-hidden="true" />
+                  <Loader2
+                    size={18}
+                    strokeWidth={2}
+                    className="animate-spin"
+                    aria-hidden="true"
+                  />
                   Loading...
                 </>
               ) : (
@@ -175,7 +185,7 @@ export const Login = () => {
           <footer className={footerClass}>
             <p className={footerTextClass}>
               Don't have an account?{" "}
-              <Link to="/signup" className={linkAccentClass}>
+              <Link to="/properties/signup" className={linkAccentClass}>
                 Create account
               </Link>
             </p>
