@@ -108,3 +108,24 @@ export const secondaryButtonClass =
 
 export const primaryButtonInlineClass =
   "inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-lg border-none bg-[#0e1520] px-5 py-[13px] font-['DM_Sans',system-ui,sans-serif] text-[15px] leading-none font-semibold text-[#f7f8fa] no-underline transition-[background-color,transform,box-shadow] duration-150 hover:bg-[#243044] hover:shadow-[0_2px_8px_-2px_rgba(14,21,32,0.25)] active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] motion-reduce:transition-none motion-reduce:active:scale-100";
+
+export const passwordChecklistClass =
+  "flex flex-col gap-1.5 rounded-lg border border-[rgba(14,21,32,0.08)] bg-[#f4f6f8] p-3";
+
+export const passwordRuleClass =
+  "flex items-center gap-2 text-[12px] leading-snug transition-colors duration-150";
+
+export const passwordRulePassClass =
+  "text-[#1e6b3a] font-medium";
+
+export const passwordRuleFailClass =
+  "text-[#8d9aad]";
+
+export const successAlertClass =
+  "text-[13px] font-medium p-3 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200";
+
+export const errorAlertClass =
+  "text-[13px] font-medium p-3 rounded-md bg-red-50 text-red-600 border border-red-100";
+
+export const warningAlertClass =
+  "text-[13px] font-medium p-3 rounded-md bg-amber-50 text-amber-800 border border-amber-200";
