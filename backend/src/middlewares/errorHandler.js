@@ -1,7 +1,7 @@
 import { AppError, ValidationError } from "../utils/errors.js";
 
 export const notFoundHandler = (req, res, next) => {
-  next(new AppError(`Ruta no encontrada: ${req.originalUrl}`, 404));
+  next(new AppError(`Route not found: ${req.originalUrl}`, 404));
 };
 
 export const errorHandler = (err, req, res, _next) => {
@@ -17,7 +17,7 @@ export const errorHandler = (err, req, res, _next) => {
 
   const message =
     process.env.NODE_ENV === "production"
-      ? "Error interno del servidor"
+      ? "Internal server error"
       : err.message;
 
   res.status(500).json({
