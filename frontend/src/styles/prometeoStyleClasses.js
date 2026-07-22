@@ -69,10 +69,10 @@ export const brandEyebrowClass =
 export const brandWordmarkClass =
   "font-['Fraunces',Georgia,serif] text-[22px] leading-none font-semibold tracking-[-0.02em] text-[#0e1520]";
 
-export const publicNavClass = "flex flex-wrap items-center gap-6 max-[480px]:gap-4";
+export const publicNavClass = "flex flex-wrap items-center gap-16 max-[480px]:gap-4";
 
 export const navLinkClass =
-  "text-sm font-medium text-[#5a6a7e] no-underline transition-colors duration-150 hover:text-[#b85c28] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] motion-reduce:transition-none";
+  "text-lg font-medium text-[#5a6a7e] no-underline transition-colors duration-150 hover:text-[#b85c28] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] motion-reduce:transition-none";
 
 export const navLinkActiveClass = `${navLinkClass} text-[#b85c28]`;
 

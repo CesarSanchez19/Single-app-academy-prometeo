@@ -8,12 +8,12 @@ import {
   publicNavClass,
   navLinkClass,
   navLinkActiveClass,
+  primaryButtonInlineClass,
 } from '@/styles/prometeoStyleClasses.js';
 
 const navItems = [
   { to: '/', label: 'Home', end: true },
   { to: '/about-us', label: 'Nosotros' },
-  { to: '/login', label: 'Iniciar sesión' },
 ];
 
 export const PublicHeader = () => {
@@ -42,6 +42,7 @@ export const PublicHeader = () => {
               {label}
             </Link>
           ))}
+          <Link to="/login" className={primaryButtonInlineClass}>Iniciar sesión</Link>
         </nav>
       </div>
     </header>
