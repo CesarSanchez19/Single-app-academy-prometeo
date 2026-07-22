@@ -19,7 +19,7 @@ if (!MONGODB_URI) {
 
 const TEST_USERS = [];
 
-for (let i = 1; i <= 10; i++) {
+for (let i = 1; i <= 6; i++) {
   TEST_USERS.push({
     name: `Admin${i}`,
     lastname: "Prometeo",
@@ -31,7 +31,7 @@ for (let i = 1; i <= 10; i++) {
   });
 }
 
-for (let i = 1; i <= 10; i++) {
+for (let i = 1; i <= 6; i++) {
   TEST_USERS.push({
     name: `User${i}`,
     lastname: "Prometeo",
@@ -91,7 +91,7 @@ async function seed() {
     }
 
     console.log("\n=== SEED COMPLETE ===");
-    console.log("Test credentials generated (1 to 10 for each):");
+    console.log("Test credentials generated (1 to 6 for each):");
     console.log("  Admins: admin1@prometeo.com / Admin123!");
     console.log("  Users:  user1@prometeo.com / User123!");
   } catch (error) {

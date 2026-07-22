@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, LogIn, Loader2 } from "lucide-react";
 import { useAuth } from "@hooks/useAuth.js";
@@ -118,7 +118,7 @@ export const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={inputClass}
-                placeholder="your@email.com"
+                placeholder="Enter your email, e.g. john@company.com"
                 autoComplete="email"
                 disabled={isLoading}
               />
@@ -139,7 +139,7 @@ export const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className={inputClass}
-                placeholder="••••••••"
+                placeholder="Enter your password, e.g. SecurePass123!"
                 autoComplete="current-password"
                 disabled={isLoading}
               />
@@ -185,7 +185,7 @@ export const Login = () => {
           <footer className={footerClass}>
             <p className={footerTextClass}>
               Don't have an account?{" "}
-              <Link to="/properties/signup" className={linkAccentClass}>
+              <Link to="/signup" className={linkAccentClass}>
                 Create account
               </Link>
             </p>

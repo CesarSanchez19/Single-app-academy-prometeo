@@ -65,7 +65,6 @@ const UserProfile = lazy(() =>
 export const AppRouter = () => (
   <Suspense fallback={<PageSpinner />}>
     <Routes>
-      {/* Público: Home + AboutUs */}
       <Route element={<PublicLayout />}>
         <Route index element={<Home />} />
         <Route path="about-us" element={<AboutUs />} />
@@ -75,7 +74,7 @@ export const AppRouter = () => (
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/properties/signup" element={<Signup />} />
+        <Route path="/signup" element={<Signup />} />
       </Route>
 
       <Route element={<PrivateRoute />}>
