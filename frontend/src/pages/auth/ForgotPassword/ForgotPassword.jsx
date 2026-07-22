@@ -1,4 +1,4 @@
-﻿import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Mail } from "lucide-react";
 import {
   pageClass,
@@ -58,7 +58,7 @@ export const ForgotPassword = () => {
                 type="email"
                 id="email"
                 className={inputClass}
-                placeholder="your@email.com"
+                placeholder="Enter your email, e.g. john@company.com"
                 autoComplete="email"
               />
             </div>

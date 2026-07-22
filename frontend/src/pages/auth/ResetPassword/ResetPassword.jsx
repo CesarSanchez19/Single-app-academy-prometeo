@@ -58,7 +58,7 @@ export const ResetPassword = () => {
                 type="password"
                 id="password"
                 className={inputClass}
-                placeholder="••••••••"
+                placeholder="Create a password, e.g. SecurePass123!"
                 autoComplete="new-password"
               />
             </div>
@@ -71,7 +71,7 @@ export const ResetPassword = () => {
                 type="password"
                 id="confirm-password"
                 className={inputClass}
-                placeholder="••••••••"
+                placeholder="Confirm your password, e.g. SecurePass123!"
                 autoComplete="new-password"
               />
             </div>
