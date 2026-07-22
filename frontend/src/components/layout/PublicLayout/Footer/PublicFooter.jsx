@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
-import './PublicFooter.css';
+import { publicFooterClass, publicFooterInnerClass, footerTextClass } from '@/styles/prometeoStyleClasses.js';
 
 export const PublicFooter = () => {
   return (
-    <footer className="public-footer">
-      <div className="footer-container">
-        <p className="text-muted footer-copyright">
+    <footer className={publicFooterClass}>
+      <div className={publicFooterInnerClass}>
+        <p className={footerTextClass}>
           © 2026 Prometeo by Galetics. Todos los derechos reservados.
         </p>
       </div>

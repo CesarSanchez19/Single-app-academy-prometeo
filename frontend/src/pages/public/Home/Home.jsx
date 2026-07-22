@@ -1,26 +1,59 @@
-import { useHealth } from "@hooks/useHealth.js";
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import { useHealth } from '@hooks/useHealth.js';
+import {
+  heroCardClass,
+  introClass,
+  eyebrowClass,
+  titleClass,
+  descriptionClass,
+  statusPillClass,
+  statusLoadingClass,
+  statusSuccessClass,
+  statusErrorClass,
+  actionsRowClass,
+  primaryButtonInlineClass,
+  secondaryButtonClass,
+} from '@/styles/prometeoStyleClasses.js';
 
 export const Home = () => {
   const { health, isLoading, error } = useHealth();
 
   const renderStatus = () => {
-    if (isLoading) return <span className="text-muted">Verificando conexión...</span>;
-    if (error) return <span style={{ color: 'var(--color-danger)' }}>{error}</span>;
-    return <span style={{ color: 'var(--color-success)', fontWeight: 500 }}>{health?.message ?? "Sin datos"}</span>;
+    if (isLoading) {
+      return <span className={statusLoadingClass}>Verificando conexión...</span>;
+    }
+    if (error) {
+      return <span className={statusErrorClass}>{error}</span>;
+    }
+    return (
+      <span className={statusSuccessClass}>{health?.message ?? 'Sin datos'}</span>
+    );
   };
 
   return (
-    <div className="card text-center" style={{ maxWidth: '600px', margin: '0 auto', marginTop: '40px' }}>
-      <h1 className="card-title" style={{ fontSize: '2rem', color: 'var(--color-primary)' }}>Prometeo</h1>
-      <p className="text-muted mb-4">Monorepo React + Vite / Express + MongoDB Atlas</p>
-      
-      <div style={{ padding: '16px', backgroundColor: 'var(--color-background)', borderRadius: 'var(--radius-md)' }}>
-        <p>Estado del backend: {renderStatus()}</p>
+    <div className={heroCardClass}>
+      <div className={introClass}>
+        <span className={eyebrowClass}>Prometeo</span>
+        <h1 className={titleClass}>Gestión de academias, con claridad</h1>
+        <p className={descriptionClass}>
+          Organiza sesiones, clientes y equipos desde una plataforma pensada para
+          academias que necesitan orden sin perder calidez.
+        </p>
       </div>
-      
-      <div className="flex justify-center gap-4 mt-4">
-        <button className="btn btn-primary">Empezar</button>
-        <button className="btn btn-outline">hola</button>
+
+      <div className={statusPillClass}>
+        <span>Estado del backend: {renderStatus()}</span>
+      </div>
+
+      <div className={actionsRowClass}>
+        <Link to="/login" className={primaryButtonInlineClass}>
+          Empezar
+          <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+        </Link>
+        <Link to="/about-us" className={secondaryButtonClass}>
+          Conocer más
+        </Link>
       </div>
     </div>
   );

@@ -1,19 +1,47 @@
-import { Link } from 'react-router-dom';
-import { Building2 } from 'lucide-react';
-import './PublicHeader.css';
+import { Link, useLocation } from 'react-router-dom';
+import {
+  publicHeaderClass,
+  publicHeaderInnerClass,
+  brandLinkClass,
+  brandEyebrowClass,
+  brandWordmarkClass,
+  publicNavClass,
+  navLinkClass,
+  navLinkActiveClass,
+} from '@/styles/prometeoStyleClasses.js';
+
+const navItems = [
+  { to: '/', label: 'Home', end: true },
+  { to: '/about-us', label: 'Nosotros' },
+  { to: '/login', label: 'Iniciar sesión' },
+];
 
 export const PublicHeader = () => {
+  const { pathname } = useLocation();
+
+  const isActive = (to, end = false) => {
+    if (end) return pathname === to;
+    return pathname.startsWith(to);
+  };
+
   return (
-    <header className="public-header">
-      <div className="header-container">
-        <Link to="/" className="brand flex items-center gap-2">
-          <Building2 size={24} className="brand-icon" />
-          <span className="brand-text">Prometeo</span>
+    <header className={publicHeaderClass}>
+      <div className={publicHeaderInnerClass}>
+        <Link to="/" className={brandLinkClass}>
+          <span className={brandEyebrowClass}>Academy</span>
+          <span className={brandWordmarkClass}>Prometeo</span>
         </Link>
-        <nav className="header-nav">
-          <Link to="/" className="header-link">Home</Link>
-          <Link to="/about-us" className="header-link">Nosotros</Link>
-          <Link to="/login" className="header-link">Iniciar sesión</Link>
+
+        <nav className={publicNavClass} aria-label="Navegación principal">
+          {navItems.map(({ to, label, end }) => (
+            <Link
+              key={to}
+              to={to}
+              className={isActive(to, end) ? navLinkActiveClass : navLinkClass}
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>

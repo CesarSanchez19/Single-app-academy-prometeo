@@ -1,12 +1,27 @@
-﻿export const AboutUs = () => {
+﻿import {
+  pageCardClass,
+  introClass,
+  eyebrowClass,
+  titleClass,
+  descriptionClass,
+  primaryButtonInlineClass,
+} from '@/styles/prometeoStyleClasses.js';
+
+export const AboutUs = () => {
   return (
-    <div className="card">
-      <h1 className="card-title">AboutUs</h1>
-      <p className="text-muted">Esta es una vista en construcción para AboutUs. Su diseño base ya implementa las tarjetas de Material Style.</p>
-      <div className="mt-4">
-        <button className="btn btn-primary">Acción de Ejemplo</button>
+    <div className={pageCardClass}>
+      <div className={introClass}>
+        <span className={eyebrowClass}>Prometeo</span>
+        <h1 className={titleClass}>Nosotros</h1>
+        <p className={descriptionClass}>
+          Estamos construyendo la plataforma para academias que quieren operar con
+          claridad: menos fricción administrativa, más tiempo para enseñar.
+        </p>
       </div>
+
+      <button type="button" className={primaryButtonInlineClass}>
+        Conocer el equipo
+      </button>
     </div>
   );
 };
-

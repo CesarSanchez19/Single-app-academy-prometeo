@@ -21,7 +21,7 @@ import {
   submitButtonClass,
   footerClass,
   footerTextClass,
-} from "@pages/auth/authClasses.js";
+} from "@/styles/prometeoStyleClasses.js";
 
 export const Login = () => {
   const navigate = useNavigate();
