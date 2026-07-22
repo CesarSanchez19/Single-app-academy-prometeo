@@ -32,6 +32,10 @@ const tokenSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    usedAt: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,

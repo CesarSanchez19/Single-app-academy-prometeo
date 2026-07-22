@@ -26,11 +26,15 @@ export const env = Object.freeze({
   nodeEnv: process.env.NODE_ENV || "development",
   mongodbUri: process.env.MONGODB_URI,
   corsOrigin: process.env.CORS_ORIGIN || "http://localhost:5173",
+  frontendUrl: process.env.CORS_ORIGIN || "http://localhost:5173",
 
   jwtSecret: process.env.JWT_SECRET,
   jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET,
   jwtAccessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN || "15m",
   jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || "60d",
+
+  resendApiKey: process.env.RESEND_API_KEY || "",
+  resendFromEmail: process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev",
 
   get isProduction() {
     return this.nodeEnv === "production";

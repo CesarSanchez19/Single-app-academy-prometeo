@@ -20,6 +20,9 @@
     "helmet": "^8.2.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^8.9.5",
+    "react": "^18.3.1",
+    "react-email": "^6.9.0",
+    "resend": "^6.18.0",
     "ua-parser-js": "^2.0.10"
   },
   "devDependencies": {
