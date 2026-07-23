@@ -4,6 +4,7 @@ import authRoutes from "./auth.routes.js";
 import sessionRoutes from "./session.routes.js";
 
 import adminRoutes from "./admin.routes.js";
+import userRoutes from "./user.routes.js";
 
 const router = Router();
 
@@ -11,5 +12,6 @@ router.use("/health", healthRoutes);
 router.use("/auth", authRoutes);
 router.use("/sessions", sessionRoutes);
 router.use("/admin", adminRoutes);
+router.use("/users", userRoutes);
 
 export default router;
