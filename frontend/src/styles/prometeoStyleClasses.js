@@ -256,13 +256,19 @@ export const modalTitleClass =
 export const modalDescriptionClass =
   "mb-5 text-[13px] leading-relaxed text-[#5a6a7e]";
 
-export const modalActionsClass = "flex justify-end gap-2.5";
+export const modalActionsClass = "flex justify-end gap-2.5 mt-4";
 
 export const modalCancelButtonClass =
   "inline-flex cursor-pointer items-center rounded-lg border border-[rgba(14,21,32,0.14)] bg-white px-4 py-2 text-[13px] font-semibold text-[#0e1520] transition-[background-color,transform] duration-150 hover:bg-[#f4f6f8] active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] motion-reduce:transition-none motion-reduce:active:scale-100";
 
 export const modalConfirmButtonClass =
   "inline-flex cursor-pointer items-center rounded-lg border-none bg-[#b42318] px-4 py-2 text-[13px] font-semibold text-white transition-[background-color,transform] duration-150 hover:bg-[#9a1d14] active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] motion-reduce:transition-none motion-reduce:active:scale-100";
+
+export const modalFormCardClass =
+  "w-full max-w-[400px] rounded-2xl bg-white p-6 shadow-[0_20px_48px_rgba(14,21,32,0.2)]";
+
+export const modalPrimaryButtonClass =
+  "inline-flex cursor-pointer items-center rounded-lg border-none bg-[#0e1520] px-4 py-2 text-[13px] font-semibold text-[#f7f8fa] transition-[background-color,transform] duration-150 hover:bg-[#243044] active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] motion-reduce:transition-none motion-reduce:active:scale-100";
 
 // --- Dashboard: forbidden ---
 
@@ -286,7 +292,7 @@ export const forbiddenDescriptionClass =
 
 // --- Dashboard: profile ---
 
-export const profileCardClass = `${dashboardCardClass} max-w-[560px] p-6`;
+export const profileCardClass = `${dashboardCardClass} p-6`;
 
 export const profileAvatarClass =
   "flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#e9edf2] font-['Fraunces',Georgia,serif] text-xl font-semibold text-[#5a6a7e]";
@@ -297,3 +303,14 @@ export const profileMetaGridClass =
 export const profileHeaderClass = "mb-5 flex items-center gap-4";
 
 export const profileMetaLabelClass = "mb-1.5 text-xs text-[#8d9aad]";
+
+export const profileStackClass = "flex max-w-[560px] flex-col gap-4";
+
+export const profileSectionClass = dashboardCardClass;
+
+export const profileSectionTitleClass = "text-[15px] font-semibold text-[#0e1520]";
+
+export const profileSectionDescriptionClass =
+  "mb-4 text-[13px] leading-relaxed text-[#5a6a7e] text-pretty";
+
+export const profileSectionActionsClass = "mt-4 flex justify-end";
