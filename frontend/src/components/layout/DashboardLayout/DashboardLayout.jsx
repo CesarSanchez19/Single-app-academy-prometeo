@@ -1,19 +1,20 @@
 import { Outlet } from 'react-router-dom';
-import { backdropClass, shellClass, shellInnerClass, publicMainClass } from '@/styles/prometeoStyleClasses.js';
-import { PublicHeader } from './Header/PublicHeader.jsx';
-import { PublicFooter } from './Footer/PublicFooter.jsx';
+import { Sidebar } from './Sidebar.jsx';
+import {
+  dashboardShellClass,
+  dashboardMainClass,
+  dashboardPageWrapperClass,
+} from '@/styles/prometeoStyleClasses.js';
 
 export const DashboardLayout = () => {
   return (
-    <div className={`${shellClass} isolate`}>
-      <div className={backdropClass} aria-hidden="true" />
+    <div className={dashboardShellClass}>
+      <Sidebar />
 
-      <div className={shellInnerClass}>
-        <PublicHeader />
-        <main className={publicMainClass}>
+      <div className={dashboardMainClass}>
+        <main className={dashboardPageWrapperClass}>
           <Outlet />
         </main>
-        <PublicFooter />
       </div>
     </div>
   );

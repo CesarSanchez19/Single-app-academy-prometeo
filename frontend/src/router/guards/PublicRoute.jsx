@@ -2,12 +2,10 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '@hooks/useAuth.js';
 
 export const PublicRoute = () => {
-  const { isAuthenticated, accountType } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   if (isAuthenticated) {
-    if (accountType === 'admin') return <Navigate to="/admin/home" replace />;
-    if (accountType === 'user') return <Navigate to="/user/home" replace />;
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard/home" replace />;
   }
 
   return <Outlet />;
