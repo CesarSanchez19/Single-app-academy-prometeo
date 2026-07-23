@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import { useAuth } from '@hooks/useAuth.js';
-import { Forbidden } from '@components/dashboard/Forbidden.jsx';
+import { Navigate } from 'react-router-dom';
 
 export const RoleRoute = ({ role }) => {
   const auth = useAuth();
 
   if (role && auth.user?.role !== role) {
-    return <Forbidden />;
+    return <Navigate to="/access-denied" replace />;
   }
 
   return <Outlet />;

@@ -1,4 +1,4 @@
-let currentToken = null;
+let currentToken = typeof window !== 'undefined' ? localStorage.getItem('prometeo_auth_token') : null;
 
 export const setApiToken = (token) => {
   currentToken = token;

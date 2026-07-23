@@ -3,7 +3,7 @@ import { env } from "../config/env.js";
 import Token from "../models/Token.js";
 import { UnauthorizedError } from "../utils/errors.js";
 
-export const authenticate = async (req, _res, next) => {
+export const protectRoute = async (req, _res, next) => {
   try {
     const authHeader = req.headers.authorization;
 
