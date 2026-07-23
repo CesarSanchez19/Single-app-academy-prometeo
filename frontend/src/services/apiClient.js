@@ -2,6 +2,13 @@ let currentToken = typeof window !== 'undefined' ? localStorage.getItem('promete
 
 export const setApiToken = (token) => {
   currentToken = token;
+  if (typeof window !== 'undefined') {
+    if (token) {
+      localStorage.setItem('prometeo_auth_token', token);
+    } else {
+      localStorage.removeItem('prometeo_auth_token');
+    }
+  }
 };
 
 export const getApiToken = () => {
