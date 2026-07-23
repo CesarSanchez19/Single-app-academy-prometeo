@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, KeyRound, Loader2, Check, X } from "lucide-react";
 import { resetPassword } from "@services/auth.service.js";
+import { useAuth } from '@hooks/useAuth.js';
 import {
   pageClass,
   backdropClass,
@@ -46,6 +47,8 @@ export const ResetPassword = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
+  const { logout } = useAuth();
+
   const passwordChecks = useMemo(
     () => PASSWORD_RULES.map((rule) => ({ ...rule, passed: rule.test(password) })),
     [password]
@@ -82,6 +85,7 @@ export const ResetPassword = () => {
     try {
       await resetPassword(token, password);
       setSuccess(true);
+      logout();
       setTimeout(() => navigate("/login", { replace: true }), 3000);
     } catch (err) {
       setPassword("");
