@@ -77,9 +77,9 @@ export const AppRouter = () => (
       <Route element={<PublicRoute />}>
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/signup" element={<Signup />} />
       </Route>
+      <Route path="/reset-password" element={<ResetPassword />} />
 
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<DashboardLayout />}>

@@ -76,7 +76,7 @@ const metrics = [
 const credits = [
   { label: 'University', value: 'Universidad Tecnológica de la Riviera Maya' },
   { label: 'Program', value: 'Engineering in Software Development and Management' },
-  { label: 'Course', value: 'Professional Web Development — Unit 2' },
+  { label: 'Course', value: 'Professional Web Development — Unit 3' },
   { label: 'Group', value: 'IT81 · Class of 2026-2027' },
   { label: 'Instructor', value: 'Ing. Cesar David Hernández Hernández' },
   { label: 'Submission', value: 'Playa del Carmen, Quintana Roo · July 2026' },

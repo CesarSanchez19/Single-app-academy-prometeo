@@ -42,6 +42,14 @@ export const AuthProvider = ({ children }) => {
     setTokenId(null);
   }, []);
 
+  const updateUser = useCallback((newData) => {
+    setUser((prev) => {
+      const updatedUser = { ...prev, ...newData };
+      localStorage.setItem('prometeo_auth_user', JSON.stringify(updatedUser));
+      return updatedUser;
+    });
+  }, []);
+
   const value = useMemo(
     () => ({
       accessToken,
@@ -52,8 +60,9 @@ export const AuthProvider = ({ children }) => {
       tokenId,
       login,
       logout,
+      updateUser,
     }),
-    [accessToken, user, isAuthenticated, tokenId, login, logout]
+    [accessToken, user, isAuthenticated, tokenId, login, logout, updateUser]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
