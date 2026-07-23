@@ -57,11 +57,7 @@ export const Login = () => {
 
       setAuthContext({ accessToken: data.accessToken, user: data.user });
 
-      if (data.user.role === "admin") {
-        navigate("/admin/home", { replace: true });
-      } else {
-        navigate("/user/home", { replace: true });
-      }
+      navigate("/dashboard/home", { replace: true });
     } catch (err) {
       const code = err.code;
       if (code === "INVALID_CREDENTIALS") {
