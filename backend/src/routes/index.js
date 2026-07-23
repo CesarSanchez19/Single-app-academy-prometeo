@@ -5,6 +5,7 @@ import sessionRoutes from "./session.routes.js";
 
 import adminRoutes from "./admin.routes.js";
 import userRoutes from "./user.routes.js";
+import dashboardRoutes from "./dashboard.routes.js";
 
 const router = Router();
 
@@ -13,5 +14,6 @@ router.use("/auth", authRoutes);
 router.use("/sessions", sessionRoutes);
 router.use("/admin", adminRoutes);
 router.use("/users", userRoutes);
+router.use("/dashboard", dashboardRoutes);
 
 export default router;
