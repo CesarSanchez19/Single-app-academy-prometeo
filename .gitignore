@@ -87,4 +87,5 @@ production.env
 # Específicos del proyecto y agentes
 .agents/
 .gemini/
+prototype/
 skills-lock.json
