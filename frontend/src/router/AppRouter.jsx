@@ -25,6 +25,12 @@ const AboutUs = lazy(() =>
 const NotFound = lazy(() =>
   import('@pages/public/NotFound/NotFound.jsx').then((m) => ({ default: m.NotFound }))
 );
+const Unauthorized = lazy(() =>
+  import('@pages/public/Unauthorized/Unauthorized.jsx').then((m) => ({ default: m.Unauthorized }))
+);
+const AccessDenied = lazy(() =>
+  import('@pages/public/AccessDenied/AccessDenied.jsx').then((m) => ({ default: m.AccessDenied }))
+);
 
 const Login = lazy(() =>
   import('@pages/auth/Login/Login.jsx').then((m) => ({ default: m.Login }))
@@ -87,7 +93,11 @@ export const AppRouter = () => (
         </Route>
       </Route>
 
-      <Route path="*" element={<NotFound />} />
+      <Route element={<PublicLayout />}>
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/access-denied" element={<AccessDenied />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
     </Routes>
   </Suspense>
 );
