@@ -32,6 +32,14 @@ const tokenSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    lastActiveAt: {
+      type: Date,
+      default: Date.now,
+    },
+    ipAddress: {
+      type: String,
+      default: "Unknown",
+    },
     usedAt: {
       type: Date,
       default: null,

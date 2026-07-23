@@ -61,7 +61,7 @@ export const registerUser = async ({ name, lastname, email, password }) => {
   }
 };
 
-export const loginUser = async ({ email, password, userAgent = "" }) => {
+export const loginUser = async ({ email, password, userAgent = "", ip = "Unknown" }) => {
   const user = await User.findOne({ email }).select("+hashedPassword");
 
   if (!user) {
@@ -86,16 +86,9 @@ export const loginUser = async ({ email, password, userAgent = "" }) => {
     throw error;
   }
 
-  const accessToken = jwt.sign(
-    {
-      userId: user._id,
-      email: user.email,
-      role: user.role,
-      accountType: user.accountType,
-    },
-    env.jwtSecret,
-    { expiresIn: env.jwtAccessExpiresIn }
-  );
+  const parser = new UAParser(userAgent || "");
+  const browserInfo = parser.getBrowser();
+  const osInfo = parser.getOS();
 
   const refreshToken = jwt.sign(
     { userId: user._id },
@@ -107,14 +100,11 @@ export const loginUser = async ({ email, password, userAgent = "" }) => {
     .createHash("sha256")
     .update(refreshToken)
     .digest("hex");
-  const parser = new UAParser(userAgent || "");
-  const browserInfo = parser.getBrowser();
-  const osInfo = parser.getOS();
 
   const refreshExpiresMs = parseExpiration(env.jwtRefreshExpiresIn);
   const expiresAt = new Date(Date.now() + refreshExpiresMs);
 
-  await Token.create({
+  const tokenDoc = await Token.create({
     userId: user._id,
     tokenHash,
     context: "session",
@@ -127,9 +117,23 @@ export const loginUser = async ({ email, password, userAgent = "" }) => {
         : "Unknown",
       raw: (userAgent || "").substring(0, 500),
     },
+    ipAddress: ip || "Unknown",
     expiresAt,
     revoked: false,
+    lastActiveAt: new Date(),
   });
+
+  const accessToken = jwt.sign(
+    {
+      userId: user._id,
+      email: user.email,
+      role: user.role,
+      accountType: user.accountType,
+      tokenId: tokenDoc._id,
+    },
+    env.jwtSecret,
+    { expiresIn: env.jwtAccessExpiresIn }
+  );
 
   user.lastActiveAt = new Date();
   await user.save({ validateBeforeSave: false });
@@ -139,6 +143,7 @@ export const loginUser = async ({ email, password, userAgent = "" }) => {
   return {
     accessToken,
     refreshToken,
+    tokenId: tokenDoc._id,
     user: userObj,
   };
 };
@@ -286,4 +291,13 @@ export const resetPassword = async ({ token, newPassword }) => {
     { userId: tokenDoc.userId, context: "session", revoked: false },
     { revoked: true }
   );
+};
+
+export const logoutUser = async ({ tokenId }) => {
+  const tokenDoc = await Token.findById(tokenId);
+
+  if (tokenDoc && !tokenDoc.revoked) {
+    tokenDoc.revoked = true;
+    await tokenDoc.save();
+  }
 };

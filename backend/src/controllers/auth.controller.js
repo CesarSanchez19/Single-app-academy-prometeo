@@ -3,6 +3,7 @@ import {
   registerUser,
   forgotPassword as forgotPasswordService,
   resetPassword as resetPasswordService,
+  logoutUser,
 } from "../services/auth.service.js";
 import { ConflictError, ValidationError } from "../utils/errors.js";
 
@@ -78,11 +79,13 @@ export const login = async (req, res, next) => {
     }
 
     const userAgent = req.headers["user-agent"] || "";
+    const ip = req.ip || req.connection.remoteAddress || "Unknown";
 
-    const { accessToken, refreshToken, user } = await loginUser({
+    const { accessToken, refreshToken, tokenId, user } = await loginUser({
       email: email.toLowerCase().trim(),
       password,
       userAgent,
+      ip,
     });
 
     res.cookie("refreshToken", refreshToken, {
@@ -98,6 +101,7 @@ export const login = async (req, res, next) => {
       message: "Login successful",
       data: {
         accessToken,
+        tokenId,
         user,
       },
     });
@@ -209,7 +213,29 @@ export const resetPassword = async (req, res, next) => {
         ...(error.errors?.length && { errors: error.errors }),
       });
     }
+    next(error);
+  }
+};
 
+export const logout = async (req, res, next) => {
+  try {
+    if (req.user && req.user.tokenId) {
+      await logoutUser({ tokenId: req.user.tokenId });
+    }
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+      path: "/",
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Logged out successfully",
+      data: null,
+    });
+  } catch (error) {
     next(error);
   }
 };

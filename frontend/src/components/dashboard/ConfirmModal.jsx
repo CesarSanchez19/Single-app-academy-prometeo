@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Loader2 } from 'lucide-react';
 import {
   modalOverlayClass,
   modalCardClass,
@@ -15,6 +16,8 @@ export const ConfirmModal = ({
   description,
   cancelLabel = 'Cancel',
   confirmLabel = 'Confirm',
+  isLoading = false,
+  error = null,
   onCancel,
   onConfirm,
 }) => {
@@ -48,17 +51,35 @@ export const ConfirmModal = ({
           {title}
         </h2>
         {description && <p className={modalDescriptionClass}>{description}</p>}
+        {error && (
+          <div className="mt-3 p-3 bg-red-50 border border-red-100 text-red-600 text-sm rounded-md">
+            {error}
+          </div>
+        )}
         <div className={modalActionsClass}>
           <button
             ref={cancelRef}
             type="button"
-            className={modalCancelButtonClass}
+            className={`${modalCancelButtonClass} ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
             onClick={onCancel}
+            disabled={isLoading}
           >
             {cancelLabel}
           </button>
-          <button type="button" className={modalConfirmButtonClass} onClick={onConfirm}>
-            {confirmLabel}
+          <button 
+            type="button" 
+            className={`${modalConfirmButtonClass} ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`} 
+            onClick={onConfirm}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <span className="flex items-center gap-2">
+                <Loader2 size={16} className="animate-spin" />
+                Processing...
+              </span>
+            ) : (
+              confirmLabel
+            )}
           </button>
         </div>
       </div>

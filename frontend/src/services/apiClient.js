@@ -39,7 +39,11 @@ async function request(path, { method = "GET", body, headers = {}, ...options } 
     if (response.status === 401 && path !== "/auth/refresh") {
       setApiToken(null);
       if (typeof window !== "undefined" && window.location.pathname !== "/login") {
-        window.location.href = "/login";
+        if (json.code === "SESSION_REVOKED") {
+          window.location.href = "/login?reason=session-revoked";
+        } else {
+          window.location.href = "/login";
+        }
       }
     }
 

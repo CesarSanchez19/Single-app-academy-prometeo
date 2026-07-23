@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Activity, User, ScrollText, LogOut } from 'lucide-react';
 import { useAuth } from '@hooks/useAuth.js';
+import { logout as logoutService } from '@services/session.service.js';
 import { ConfirmModal } from '@components/dashboard/ConfirmModal.jsx';
 import {
   dashboardSidebarClass,
@@ -42,11 +43,20 @@ export const Sidebar = () => {
   const location = useLocation();
   const { role, logout } = useAuth();
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const isAdmin = role === 'admin';
 
-  const handleLogoutConfirm = () => {
-    setIsLogoutOpen(false);
-    logout();
+  const handleLogoutConfirm = async () => {
+    setIsLoggingOut(true);
+    try {
+      await logoutService();
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      setIsLoggingOut(false);
+      setIsLogoutOpen(false);
+      logout();
+    }
   };
 
   return (
@@ -108,6 +118,7 @@ export const Sidebar = () => {
         description="You will be signed out and redirected to the login page."
         cancelLabel="Cancel"
         confirmLabel="Log out"
+        isLoading={isLoggingOut}
         onCancel={() => setIsLogoutOpen(false)}
         onConfirm={handleLogoutConfirm}
       />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, LogIn, Loader2 } from "lucide-react";
 import { useAuth } from "@hooks/useAuth.js";
 import { login as loginService } from "@services/auth.service.js";
@@ -28,12 +28,17 @@ import {
 
 export const Login = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { login: setAuthContext } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(
+    searchParams.get("reason") === "session-revoked"
+      ? { type: "revoked", message: "Your session was closed from another device. Please sign in again." }
+      : null
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,7 +60,7 @@ export const Login = () => {
     try {
       const data = await loginService(email, password);
 
-      setAuthContext({ accessToken: data.accessToken, user: data.user });
+      setAuthContext({ accessToken: data.accessToken, user: data.user, tokenId: data.tokenId });
 
       navigate("/dashboard/home", { replace: true });
     } catch (err) {
@@ -144,7 +149,7 @@ export const Login = () => {
             {error && (
               <div
                 className={`text-[13px] font-medium p-3 rounded-md ${
-                  error.type === "suspended"
+                  error.type === "suspended" || error.type === "revoked"
                     ? "bg-amber-50 text-amber-800 border border-amber-200"
                     : "bg-red-50 text-red-600 border border-red-100"
                 }`}
