@@ -130,8 +130,6 @@ export const errorAlertClass =
 export const warningAlertClass =
   "text-[13px] font-medium p-3 rounded-md bg-amber-50 text-amber-800 border border-amber-200";
 
-/* ---------------- Home ---------------- */
-
 export const monoFontClass = "font-[ui-monospace,SFMono-Regular,Menlo,monospace]";
 
 export const homeStackClass = "flex w-full flex-col";
@@ -474,8 +472,6 @@ export const dashboardLogoutButtonClass =
 export const dashboardSidebarAdminSectionClass =
   "mt-3.5 border-t border-[rgba(14,21,32,0.08)] pt-3.5";
 
-// --- Dashboard: page layout ---
-
 export const dashboardPageEyebrowClass = eyebrowClass;
 
 export const dashboardPageTitleClass = titleClass;
@@ -539,8 +535,6 @@ export const dashboardDestructiveButtonClass =
 
 export const dashboardLinkClass = linkAccentClass;
 
-// --- Dashboard: modal ---
-
 export const modalOverlayClass =
   "fixed inset-0 z-50 flex items-center justify-center bg-[rgba(14,21,32,0.55)] p-4";
 
@@ -586,8 +580,6 @@ export const forbiddenTitleClass =
 
 export const forbiddenDescriptionClass =
   "mb-7 text-sm leading-relaxed text-[#5a6a7e] text-pretty";
-
-// --- Dashboard: profile ---
 
 export const profileCardClass = `${dashboardCardClass} p-6`;
 

@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '@hooks/useAuth.js';
 import {
   publicHeaderClass,
   publicHeaderInnerClass,
@@ -17,6 +18,7 @@ const navItems = [
 
 export const PublicHeader = () => {
   const { pathname } = useLocation();
+  const { isAuthenticated } = useAuth();
 
   const isActive = (to, end = false) => {
     if (end) return pathname === to;
@@ -40,7 +42,11 @@ export const PublicHeader = () => {
               {label}
             </Link>
           ))}
-          <Link to="/login" className={primaryButtonInlineClass}>Sign in</Link>
+          {isAuthenticated ? (
+            <Link to="/dashboard/home" className={primaryButtonInlineClass}>Dashboard</Link>
+          ) : (
+            <Link to="/login" className={primaryButtonInlineClass}>Sign in</Link>
+          )}
         </nav>
       </div>
     </header>
