@@ -81,14 +81,14 @@ const areas = [
   {
     icon: User,
     title: 'User',
-    text: 'The panel for an account with the user role. It shows the profile, allows editing personal data and lists the active sessions on every device.',
-    routes: ['/user/home', '/user/profile'],
+    text: 'The dashboard for any authenticated account. It shows the profile, allows editing personal data and lists the active sessions on every device.',
+    routes: ['/dashboard/home', '/dashboard/profile', '/dashboard/active-sessions'],
   },
   {
     icon: Shield,
     title: 'Administrator',
-    text: 'The panel with elevated permissions. Its endpoints go through the role middleware first, which stops the request when the account does not qualify.',
-    routes: ['/admin/home', '/admin/profile'],
+    text: 'The sections reserved for the admin role. They go through the role middleware first, which stops the request when the account does not qualify.',
+    routes: ['/dashboard/monitoring'],
   },
 ];
 
