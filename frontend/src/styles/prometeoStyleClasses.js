@@ -129,3 +129,47 @@ export const errorAlertClass =
 
 export const warningAlertClass =
   "text-[13px] font-medium p-3 rounded-md bg-amber-50 text-amber-800 border border-amber-200";
+
+// --- Dashboard: shell ---
+
+export const dashboardShellClass =
+  "flex min-h-screen min-h-dvh bg-[#e9edf2] font-['DM_Sans',system-ui,sans-serif] text-[#0e1520] antialiased";
+
+export const dashboardMainClass =
+  "flex min-w-0 flex-1 flex-col";
+
+export const dashboardPageWrapperClass =
+  "mx-auto w-full max-w-[1200px] flex-1 p-6 max-[480px]:p-4";
+
+// --- Dashboard: sidebar ---
+
+export const dashboardSidebarClass =
+  "sticky top-0 flex h-screen w-[260px] shrink-0 flex-col border-r border-[rgba(14,21,32,0.08)] bg-white";
+
+export const dashboardSidebarHeaderClass =
+  "border-b border-[rgba(14,21,32,0.08)] px-6 py-6";
+
+export const dashboardSidebarBrandClass =
+  "font-['Fraunces',Georgia,serif] text-xl font-semibold tracking-[-0.02em] text-[#0e1520]";
+
+export const dashboardSidebarContentClass =
+  "flex flex-1 flex-col overflow-y-auto p-4";
+
+export const dashboardSidebarSectionClass = "mb-6";
+
+export const dashboardSidebarSubtitleClass =
+  "mb-2 px-3 text-[11px] font-semibold tracking-[0.1em] text-[#5a6a7e] uppercase";
+
+export const dashboardSidebarNavClass = "flex flex-col gap-1";
+
+export const dashboardSidebarLinkClass =
+  "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#5a6a7e] no-underline transition-[color,background-color] duration-150 hover:bg-[#f4f6f8] hover:text-[#243044] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] motion-reduce:transition-none";
+
+export const dashboardSidebarLinkActiveClass =
+  "bg-[rgba(184,92,40,0.1)] text-[#b85c28] hover:bg-[rgba(184,92,40,0.14)] hover:text-[#9a4a1f]";
+
+export const dashboardSidebarFooterClass =
+  "mt-auto border-t border-[rgba(14,21,32,0.08)] p-4";
+
+export const dashboardLogoutButtonClass =
+  "inline-flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-lg border border-[rgba(14,21,32,0.08)] bg-[rgba(255,255,255,0.65)] px-4 py-2.5 text-sm font-semibold leading-none text-[#243044] transition-[color,background-color,border-color,transform] duration-150 hover:border-[rgba(14,21,32,0.14)] hover:bg-white active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] motion-reduce:transition-none motion-reduce:active:scale-100";
