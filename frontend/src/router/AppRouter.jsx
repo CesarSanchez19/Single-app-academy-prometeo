@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { PrivateRoute } from './guards/PrivateRoute.jsx';
 import { PublicRoute } from './guards/PublicRoute.jsx';
 import { RoleRoute } from './guards/RoleRoute.jsx';
@@ -10,14 +10,9 @@ const PublicLayout = lazy(() =>
     default: m.PublicLayout,
   }))
 );
-const AdminDashboardLayout = lazy(() =>
-  import('@components/layout/AdminDashboardLayout/AdminDashboardLayout.jsx').then((m) => ({
-    default: m.AdminDashboardLayout,
-  }))
-);
-const UserDashboardLayout = lazy(() =>
-  import('@components/layout/UserDashboardLayout/UserDashboardLayout.jsx').then((m) => ({
-    default: m.UserDashboardLayout,
+const DashboardLayout = lazy(() =>
+  import('@components/layout/DashboardLayout/DashboardLayout.jsx').then((m) => ({
+    default: m.DashboardLayout,
   }))
 );
 
@@ -48,18 +43,21 @@ const Signup = lazy(() =>
   import('@pages/auth/Signup/Signup.jsx').then((m) => ({ default: m.Signup }))
 );
 
-const AdminHome = lazy(() =>
-  import('@pages/admin/home/AdminHome.jsx').then((m) => ({ default: m.AdminHome }))
+const DashboardHome = lazy(() =>
+  import('@pages/Dashboard/Home/Home.jsx').then((m) => ({ default: m.DashboardHome }))
 );
-const AdminProfile = lazy(() =>
-  import('@pages/admin/profile/AdminProfile.jsx').then((m) => ({ default: m.AdminProfile }))
+const ActiveSessions = lazy(() =>
+  import('@pages/Dashboard/ActiveSessions/ActiveSessions.jsx').then((m) => ({
+    default: m.ActiveSessions,
+  }))
 );
-
-const UserHome = lazy(() =>
-  import('@pages/user/home/UserHome.jsx').then((m) => ({ default: m.UserHome }))
+const Profile = lazy(() =>
+  import('@pages/Dashboard/Profile/Profile.jsx').then((m) => ({ default: m.Profile }))
 );
-const UserProfile = lazy(() =>
-  import('@pages/user/profile/UserProfile.jsx').then((m) => ({ default: m.UserProfile }))
+const Monitoring = lazy(() =>
+  import('@pages/Dashboard/Monitoring/Monitoring.jsx').then((m) => ({
+    default: m.Monitoring,
+  }))
 );
 
 export const AppRouter = () => (
@@ -78,17 +76,13 @@ export const AppRouter = () => (
       </Route>
 
       <Route element={<PrivateRoute />}>
-        <Route element={<RoleRoute role="admin" />}>
-          <Route element={<AdminDashboardLayout />}>
-            <Route path="/admin/home" element={<AdminHome />} />
-            <Route path="/admin/profile" element={<AdminProfile />} />
-          </Route>
-        </Route>
-
-        <Route element={<RoleRoute role="user" />}>
-          <Route element={<UserDashboardLayout />}>
-            <Route path="/user/home" element={<UserHome />} />
-            <Route path="/user/profile" element={<UserProfile />} />
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Navigate to="home" replace />} />
+          <Route path="home" element={<DashboardHome />} />
+          <Route path="active-sessions" element={<ActiveSessions />} />
+          <Route path="profile" element={<Profile />} />
+          <Route element={<RoleRoute role="admin" />}>
+            <Route path="monitoring" element={<Monitoring />} />
           </Route>
         </Route>
       </Route>
