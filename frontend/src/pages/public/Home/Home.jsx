@@ -58,7 +58,7 @@ import {
 
 const specRows = [
   { label: 'Course', value: 'Professional Web Development' },
-  { label: 'Unit', value: 'Unit 2 — Final project' },
+  { label: 'Unit', value: 'Unit 3 — Final project' },
   { label: 'Team', value: '8 members · IT81' },
   { label: 'University', value: 'UTRM' },
   { label: 'Submission', value: 'July 2026' },

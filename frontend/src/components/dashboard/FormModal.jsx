@@ -17,6 +17,7 @@ export const FormModal = ({
   submitLabel = 'Save changes',
   onCancel,
   onSubmit,
+  hideActions = false,
   children,
 }) => {
   const cancelRef = useRef(null);
@@ -29,10 +30,15 @@ export const FormModal = ({
     };
 
     document.addEventListener('keydown', handleKeyDown);
-    cancelRef.current?.focus();
 
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onCancel]);
+
+  useEffect(() => {
+    if (isOpen && !hideActions) {
+      cancelRef.current?.focus();
+    }
+  }, [isOpen, hideActions]);
 
   if (!isOpen) return null;
 
@@ -51,24 +57,28 @@ export const FormModal = ({
     >
       <div className={modalFormCardClass} onClick={(e) => e.stopPropagation()}>
         <form onSubmit={handleSubmit}>
-          <h2 id="form-modal-title" className={modalTitleClass}>
-            {title}
-          </h2>
+          {title && (
+            <h2 id="form-modal-title" className={modalTitleClass}>
+              {title}
+            </h2>
+          )}
           {description && <p className={modalDescriptionClass}>{description}</p>}
           {children}
-          <div className={modalActionsClass}>
-            <button
-              ref={cancelRef}
-              type="button"
-              className={modalCancelButtonClass}
-              onClick={onCancel}
-            >
-              {cancelLabel}
-            </button>
-            <button type="submit" className={modalPrimaryButtonClass}>
-              {submitLabel}
-            </button>
-          </div>
+          {!hideActions && (
+            <div className={modalActionsClass}>
+              <button
+                ref={cancelRef}
+                type="button"
+                className={modalCancelButtonClass}
+                onClick={onCancel}
+              >
+                {cancelLabel}
+              </button>
+              <button type="submit" className={modalPrimaryButtonClass}>
+                {submitLabel}
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>

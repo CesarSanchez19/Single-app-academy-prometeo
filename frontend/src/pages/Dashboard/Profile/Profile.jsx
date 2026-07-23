@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@hooks/useAuth.js';
 import { DashboardPageHeader } from '@components/dashboard/DashboardPageHeader.jsx';
 import { StatusBadge } from '@components/dashboard/StatusBadge.jsx';
 import { ProfileSection } from '@components/dashboard/profile/ProfileSection.jsx';
 import { ChangeEmailModal } from '@components/dashboard/profile/ChangeEmailModal.jsx';
-import { ChangePasswordModal } from '@components/dashboard/profile/ChangePasswordModal.jsx';
+import { getUserProfile, updateUserProfile } from '@services/user.service.js';
+import { forgotPassword } from '@services/auth.service.js';
 import {
   profileStackClass,
   profileCardClass,
@@ -20,14 +21,6 @@ import {
   primaryButtonInlineClass,
   secondaryButtonClass,
 } from '@/styles/prometeoStyleClasses.js';
-
-const MOCK_PROFILE = {
-  firstName: 'Sofía',
-  lastName: 'Martín',
-  email: 'sofia.martin@prometeo.dev',
-  initials: 'SM',
-  createdAt: 'March 14, 2024',
-};
 
 const getInitials = (user, fallback) => {
   if (user?.name && user?.lastname) {
@@ -56,20 +49,105 @@ const getDisplayName = (user, firstName, lastName) => {
 };
 
 export const Profile = () => {
-  const { user, role } = useAuth();
+  const { user, role, updateUser } = useAuth();
+  
+  const [formData, setFormData] = useState({
+    name: user?.name || '',
+    lastname: user?.lastname || '',
+  });
+  
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState(null);
+  const [saveError, setSaveError] = useState(null);
+  
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
-  const firstName = user?.name || MOCK_PROFILE.firstName;
-  const lastName = user?.lastname || MOCK_PROFILE.lastName;
-  const email = user?.email || MOCK_PROFILE.email;
-  const displayName = getDisplayName(user, firstName, lastName);
-  const initials = getInitials(user, MOCK_PROFILE.initials);
-  const displayRole = (role || 'user').toUpperCase();
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
+  const [resetMessage, setResetMessage] = useState(null);
 
-  const handlePersonalInfoSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await getUserProfile();
+        if (response?.user) {
+          const freshUser = response.user;
+          updateUser(freshUser);
+          setFormData({
+            name: freshUser.name || '',
+            lastname: freshUser.lastname || '',
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch fresh profile", error);
+      }
+    };
+    fetchProfile();
+  }, [updateUser]);
+
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
+
+  const handleCancelPersonalInfo = () => {
+    setFormData({
+      name: user?.name || '',
+      lastname: user?.lastname || '',
+    });
+    setSaveMessage(null);
+    setSaveError(null);
+  };
+
+  const handlePersonalInfoSubmit = async (e) => {
+    e.preventDefault();
+    setIsSaving(true);
+    setSaveMessage(null);
+    setSaveError(null);
+    
+    try {
+      const res = await updateUserProfile(formData);
+      if (res?.user) {
+        updateUser(res.user);
+        setSaveMessage("Profile updated successfully");
+        setTimeout(() => setSaveMessage(null), 3000);
+      }
+    } catch (error) {
+      setSaveError(error?.response?.data?.message || "Failed to save changes. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    setIsResettingPassword(true);
+    setResetMessage(null);
+    try {
+      await forgotPassword(user?.email);
+      setResetMessage("Password reset instructions sent to your email.");
+    } catch (error) {
+      console.error(error);
+      setResetMessage("Failed to send recovery email.");
+    } finally {
+      setIsResettingPassword(false);
+    }
+  };
+
+  const firstName = user?.name || '';
+  const lastName = user?.lastname || '';
+  const email = user?.email || '';
+  const displayName = getDisplayName(user, firstName, lastName);
+  const initials = getInitials(user, '??');
+  const displayRole = (role || 'user').toUpperCase();
+  
+  const createdAt = user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  }) : 'Recently';
+
+  const isFormDirty = formData.name !== firstName || formData.lastname !== lastName;
 
   return (
     <div>
@@ -94,7 +172,7 @@ export const Profile = () => {
             </div>
             <div>
               <p className={profileMetaLabelClass}>Account created</p>
-              <p className="text-sm font-semibold text-[#0e1520]">{MOCK_PROFILE.createdAt}</p>
+              <p className="text-sm font-semibold text-[#0e1520]">{createdAt}</p>
             </div>
           </div>
         </div>
@@ -111,10 +189,13 @@ export const Profile = () => {
                 </label>
                 <input
                   id="profile-first-name"
+                  name="name"
                   type="text"
                   className={inputClass}
-                  defaultValue={firstName}
+                  value={formData.name}
+                  onChange={handleChange}
                   autoComplete="given-name"
+                  required
                 />
               </div>
               <div className={fieldClass}>
@@ -123,17 +204,40 @@ export const Profile = () => {
                 </label>
                 <input
                   id="profile-last-name"
+                  name="lastname"
                   type="text"
                   className={inputClass}
-                  defaultValue={lastName}
+                  value={formData.lastname}
+                  onChange={handleChange}
                   autoComplete="family-name"
+                  required
                 />
               </div>
             </div>
+            {(saveError || saveMessage) && (
+              <div className="mt-4">
+                {saveError && <p className="text-sm text-red-600">{saveError}</p>}
+                {saveMessage && !isFormDirty && <p className="text-sm text-green-600 font-medium">{saveMessage}</p>}
+              </div>
+            )}
             <div className={profileSectionActionsClass}>
-              <button type="submit" className={primaryButtonInlineClass}>
-                Save changes
+              <button 
+                type="submit" 
+                className={primaryButtonInlineClass}
+                disabled={isSaving || !isFormDirty}
+              >
+                {isSaving ? "Saving..." : "Save changes"}
               </button>
+              {isFormDirty && (
+                <button
+                  type="button"
+                  onClick={handleCancelPersonalInfo}
+                  className={secondaryButtonClass}
+                  disabled={isSaving}
+                >
+                  Cancel
+                </button>
+              )}
             </div>
           </form>
         </ProfileSection>
@@ -159,15 +263,18 @@ export const Profile = () => {
           description="Set a strong password to keep your account secure."
         >
           <p className="text-sm font-semibold tracking-widest text-[#0e1520]">••••••••</p>
-          <p className="mt-1 text-[13px] text-[#8d9aad]">Last changed — never</p>
-          <div className={`${profileSectionActionsClass} justify-start`}>
+          <div className={`${profileSectionActionsClass} justify-start flex-col items-start gap-3`}>
             <button
               type="button"
               className={secondaryButtonClass}
-              onClick={() => setIsPasswordModalOpen(true)}
+              onClick={handleResetPassword}
+              disabled={isResettingPassword}
             >
-              Change password
+              {isResettingPassword ? "Sending..." : "Change password"}
             </button>
+            {resetMessage && (
+              <p className="text-sm text-green-600 font-medium">{resetMessage}</p>
+            )}
           </div>
         </ProfileSection>
       </div>
@@ -176,11 +283,6 @@ export const Profile = () => {
         isOpen={isEmailModalOpen}
         currentEmail={email}
         onCancel={() => setIsEmailModalOpen(false)}
-      />
-
-      <ChangePasswordModal
-        isOpen={isPasswordModalOpen}
-        onCancel={() => setIsPasswordModalOpen(false)}
       />
     </div>
   );
