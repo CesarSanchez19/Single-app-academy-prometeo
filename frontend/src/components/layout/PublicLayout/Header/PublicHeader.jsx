@@ -3,7 +3,6 @@ import {
   publicHeaderClass,
   publicHeaderInnerClass,
   brandLinkClass,
-  brandEyebrowClass,
   brandWordmarkClass,
   publicNavClass,
   navLinkClass,
@@ -28,7 +27,6 @@ export const PublicHeader = () => {
     <header className={publicHeaderClass}>
       <div className={publicHeaderInnerClass}>
         <Link to="/" className={brandLinkClass}>
-          <span className={brandEyebrowClass}>Academy</span>
           <span className={brandWordmarkClass}>Prometeo</span>
         </Link>
 
