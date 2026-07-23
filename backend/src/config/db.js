@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { logSystemEvent } from "../utils/logger.js";
 
 export const connectDB = async (uri) => {
   if (!uri) {
@@ -10,6 +11,11 @@ export const connectDB = async (uri) => {
   mongoose.connection.on("connected", () => {
     const dbName = mongoose.connection.db?.databaseName || "unknown";
     console.log(`MongoDB connected — Database: ${dbName}`);
+    logSystemEvent({
+      event: `Database connection established — Database: ${dbName}`,
+      user: "System",
+      severity: "info"
+    });
   });
 
   mongoose.connection.on("error", (err) => {

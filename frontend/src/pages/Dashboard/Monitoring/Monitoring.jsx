@@ -17,51 +17,54 @@ import {
 
 const LOGS_GRID = 'grid-cols-[1.1fr_2.4fr_1.2fr_0.9fr]';
 
-const MOCK_LOGS = [
-  {
-    id: 1,
-    timestamp: '07/23 10:41',
-    event: 'Successful login',
-    user: 'sofia.martin',
-    severity: 'info',
-  },
-  {
-    id: 2,
-    timestamp: '07/23 09:58',
-    event: 'Unauthorized admin route access attempt',
-    user: 'carlos.diaz',
-    severity: 'warning',
-  },
-  {
-    id: 3,
-    timestamp: '07/23 08:20',
-    event: 'Database connection failure (retried)',
-    user: 'system',
-    severity: 'error',
-  },
-  {
-    id: 4,
-    timestamp: '07/22 23:11',
-    event: 'Session manually revoked',
-    user: 'admin.rodriguez',
-    severity: 'info',
-  },
-];
+const formatLogTimestamp = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'America/Cancun'
+  });
+
+  const weekday = new Intl.DateTimeFormat('en-US', { weekday: 'long', timeZone: 'America/Cancun' }).format(date);
+  const month = new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: 'America/Cancun' }).format(date);
+  const day = new Intl.DateTimeFormat('en-US', { day: '2-digit', timeZone: 'America/Cancun' }).format(date);
+  const year = new Intl.DateTimeFormat('en-US', { year: 'numeric', timeZone: 'America/Cancun' }).format(date);
+  const time = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Cancun' }).format(date);
+
+  return `${weekday}/ ${month} ${day}/ ${year} ${time}`;
+};
 
 const severityVariant = {
-  info: 'neutral',
-  warning: 'warning',
+  fatal: 'fatal',
   error: 'error',
+  warn: 'warning',
+  warning: 'warning',
+  info: 'neutral',
+  debug: 'debug',
+  trace: 'trace',
+  verbose: 'verbose',
 };
 
 const severityLabel = {
-  info: 'Info',
-  warning: 'Warning',
+  fatal: 'Fatal',
   error: 'Error',
+  warn: 'Warning',
+  warning: 'Warning',
+  info: 'Info',
+  debug: 'Debug',
+  trace: 'Trace',
+  verbose: 'Verbose',
 };
 
 export const Monitoring = () => {
   const [metrics, setMetrics] = useState(null);
+  const [logs, setLogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState(null);
@@ -77,6 +80,7 @@ export const Monitoring = () => {
         { label: 'Memory usage', value: data.memory?.percent || 'Unknown' },
         { label: 'Registered users', value: data.totalUsers?.toString() || '0' },
       ]);
+      setLogs(data.logs || []);
     } catch (err) {
       setError('Failed to load system metrics. Please try again.');
       console.error(err);
@@ -136,9 +140,15 @@ export const Monitoring = () => {
           <div>Severity</div>
         </div>
 
-        {MOCK_LOGS.map((log) => (
+        {logs.length === 0 && !isLoading && (
+          <div className="p-8 text-center text-slate-500 text-sm">
+            No system logs recorded yet.
+          </div>
+        )}
+        
+        {logs.map((log) => (
           <div key={log.id} className={`${dashboardTableRowClass} ${LOGS_GRID} text-[13px]`}>
-            <div className={dashboardTableCellMutedClass}>{log.timestamp}</div>
+            <div className={dashboardTableCellMutedClass}>{formatLogTimestamp(log.timestamp)}</div>
             <div>{log.event}</div>
             <div className={dashboardTableCellMutedClass}>{log.user}</div>
             <div>

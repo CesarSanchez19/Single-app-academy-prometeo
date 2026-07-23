@@ -6,6 +6,7 @@ import {
   logoutUser,
 } from "../services/auth.service.js";
 import { ConflictError, ValidationError } from "../utils/errors.js";
+import { logSystemEvent } from "../utils/logger.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -29,6 +30,12 @@ export const register = async (req, res, next) => {
     }
 
     const user = await registerUser({ name, lastname, email, password });
+
+    logSystemEvent({
+      event: "New user registered",
+      user: `${name} ${lastname}`,
+      severity: "info",
+    });
 
     return res.status(201).json({
       success: true,
@@ -96,6 +103,12 @@ export const login = async (req, res, next) => {
       path: "/",
     });
 
+    logSystemEvent({
+      event: "Successful login",
+      user: user.name ? `${user.name} ${user.lastname}` : email,
+      severity: "info",
+    });
+
     return res.status(200).json({
       success: true,
       message: "Login successful",
@@ -107,6 +120,11 @@ export const login = async (req, res, next) => {
     });
   } catch (error) {
     if (error.code === "INVALID_CREDENTIALS") {
+      logSystemEvent({
+        event: "Failed login attempt (Invalid credentials)",
+        user: req.body.email || "Unknown",
+        severity: "warning",
+      });
       return res.status(401).json({
         success: false,
         code: "INVALID_CREDENTIALS",
@@ -149,6 +167,12 @@ export const forgotPassword = async (req, res, next) => {
 
     await forgotPasswordService({ email });
 
+    logSystemEvent({
+      event: "Password reset request sent",
+      user: email,
+      severity: "info",
+    });
+
     return res.status(200).json({
       success: true,
       message:
@@ -173,6 +197,12 @@ export const resetPassword = async (req, res, next) => {
     }
 
     await resetPasswordService({ token, newPassword });
+
+    logSystemEvent({
+      event: "Password changed via reset token",
+      user: "System (Reset Link)",
+      severity: "info",
+    });
 
     return res.status(200).json({
       success: true,
