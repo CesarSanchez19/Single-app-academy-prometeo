@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import Token from "../models/Token.js";
 import bcrypt from "bcrypt";
+import { logSystemEvent } from "../utils/logger.js";
 
 export const getMe = async (req, res, next) => {
   try {
@@ -54,6 +55,12 @@ export const updateMe = async (req, res, next) => {
         message: "User not found",
       });
     }
+
+    logSystemEvent({
+      event: "User updated profile (Name/Lastname)",
+      user: `${updatedUser.name} ${updatedUser.lastname}`,
+      severity: "info",
+    });
 
     return res.status(200).json({
       success: true,
@@ -139,6 +146,12 @@ export const updateEmail = async (req, res, next) => {
       { userId: req.user.userId, context: "session", revoked: false },
       { revoked: true }
     );
+
+    logSystemEvent({
+      event: "User changed email",
+      user: `${user.name} ${user.lastname}`,
+      severity: "info",
+    });
 
     return res.status(200).json({
       success: true,
