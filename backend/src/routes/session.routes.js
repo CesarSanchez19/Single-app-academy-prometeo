@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { getSessions, revoke } from "../controllers/session.controller.js";
-import { authenticate } from "../middlewares/authenticate.js";
+import { protectRoute } from "../middlewares/protectRoute.js";
 
 const router = Router();
 
-router.use(authenticate);
+router.use(protectRoute);
 
 router.get("/", getSessions);
 router.delete("/:tokenId", revoke);
