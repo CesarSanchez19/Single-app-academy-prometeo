@@ -3,7 +3,6 @@ import {
   publicHeaderClass,
   publicHeaderInnerClass,
   brandLinkClass,
-  brandEyebrowClass,
   brandWordmarkClass,
   publicNavClass,
   navLinkClass,
@@ -13,7 +12,7 @@ import {
 
 const navItems = [
   { to: '/', label: 'Home', end: true },
-  { to: '/about-us', label: 'Nosotros' },
+  { to: '/about-us', label: 'About us' },
 ];
 
 export const PublicHeader = () => {
@@ -28,11 +27,10 @@ export const PublicHeader = () => {
     <header className={publicHeaderClass}>
       <div className={publicHeaderInnerClass}>
         <Link to="/" className={brandLinkClass}>
-          <span className={brandEyebrowClass}>Academy</span>
           <span className={brandWordmarkClass}>Prometeo</span>
         </Link>
 
-        <nav className={publicNavClass} aria-label="Navegación principal">
+        <nav className={publicNavClass} aria-label="Main navigation">
           {navItems.map(({ to, label, end }) => (
             <Link
               key={to}
@@ -42,7 +40,7 @@ export const PublicHeader = () => {
               {label}
             </Link>
           ))}
-          <Link to="/login" className={primaryButtonInlineClass}>Iniciar sesión</Link>
+          <Link to="/login" className={primaryButtonInlineClass}>Sign in</Link>
         </nav>
       </div>
     </header>
