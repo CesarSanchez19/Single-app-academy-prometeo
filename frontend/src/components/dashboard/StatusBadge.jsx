@@ -4,6 +4,10 @@ import {
   dashboardBadgeWarningClass,
   dashboardBadgeErrorClass,
   dashboardBadgeAccentClass,
+  dashboardBadgeFatalClass,
+  dashboardBadgeDebugClass,
+  dashboardBadgeTraceClass,
+  dashboardBadgeVerboseClass,
 } from '@/styles/prometeoStyleClasses.js';
 
 const variantClass = {
@@ -12,6 +16,10 @@ const variantClass = {
   warning: dashboardBadgeWarningClass,
   error: dashboardBadgeErrorClass,
   accent: dashboardBadgeAccentClass,
+  fatal: dashboardBadgeFatalClass,
+  debug: dashboardBadgeDebugClass,
+  trace: dashboardBadgeTraceClass,
+  verbose: dashboardBadgeVerboseClass,
 };
 
 export const StatusBadge = ({ variant = 'neutral', children }) => (

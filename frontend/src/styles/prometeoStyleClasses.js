@@ -525,6 +525,14 @@ export const dashboardBadgeWarningClass = `${dashboardBadgeBaseClass} border bor
 
 export const dashboardBadgeErrorClass = `${dashboardBadgeBaseClass} border border-[#fee2e2] bg-[#fef2f2] text-[#dc2626]`;
 
+export const dashboardBadgeFatalClass = `${dashboardBadgeBaseClass} border border-[#fbcfe8] bg-[#fdf2f8] text-[#be185d]`;
+
+export const dashboardBadgeDebugClass = `${dashboardBadgeBaseClass} border border-[#bfdbfe] bg-[#eff6ff] text-[#1d4ed8]`;
+
+export const dashboardBadgeTraceClass = `${dashboardBadgeBaseClass} border border-[#e5e7eb] bg-[#f9fafb] text-[#374151]`;
+
+export const dashboardBadgeVerboseClass = `${dashboardBadgeBaseClass} border border-[#cffafe] bg-[#ecfeff] text-[#0e7490]`;
+
 export const dashboardBadgeAccentClass = `${dashboardBadgeBaseClass} bg-[rgba(184,92,40,0.1)] text-[#b85c28] tracking-[0.04em]`;
 
 export const dashboardRefreshButtonClass =
