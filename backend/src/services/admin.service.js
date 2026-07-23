@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import Token from "../models/Token.js";
+import SystemLog from "../models/SystemLog.js";
 
 export const getSystemMetrics = async () => {
   const now = new Date();
@@ -7,7 +8,7 @@ export const getSystemMetrics = async () => {
   const uptimeSeconds = process.uptime();
   const memory = process.memoryUsage();
 
-  const [totalUsers, activeUsers, activeSessions] = await Promise.all([
+  const [totalUsers, activeUsers, activeSessions, systemLogs] = await Promise.all([
     User.countDocuments(),
     User.countDocuments({ status: "active" }),
     Token.countDocuments({
@@ -15,6 +16,7 @@ export const getSystemMetrics = async () => {
       revoked: false,
       expiresAt: { $gt: now },
     }),
+    SystemLog.find().sort({ timestamp: -1 }).limit(100).lean(),
   ]);
 
   const days = Math.floor(uptimeSeconds / 86400);
@@ -38,6 +40,13 @@ export const getSystemMetrics = async () => {
     activeSessions,
     totalUsers,
     activeUsers,
+    logs: systemLogs.map(log => ({
+      id: log._id.toString(),
+      timestamp: log.timestamp,
+      event: log.event,
+      user: log.user,
+      severity: log.severity,
+    })),
     timestamp: now.toISOString(),
   };
 };
