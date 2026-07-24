@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { RefreshCw, Loader2 } from 'lucide-react';
 import { DashboardPageHeader } from '@components/dashboard/DashboardPageHeader.jsx';
 import { StatusBadge } from '@components/dashboard/StatusBadge.jsx';
+import { Pagination } from '@components/dashboard/Pagination.jsx';
 import { getSystemLogs } from '@services/admin.service.js';
 import {
   dashboardRefreshButtonClass,
@@ -16,6 +17,7 @@ import {
 } from '@/styles/prometeoStyleClasses.js';
 
 const LOGS_GRID = 'grid-cols-[1.1fr_2.4fr_1.2fr_0.9fr]';
+const LOGS_PAGE_SIZE = 10;
 
 const formatLogTimestamp = (dateString) => {
   if (!dateString) return '';
@@ -65,9 +67,16 @@ const severityLabel = {
 export const Monitoring = () => {
   const [metrics, setMetrics] = useState(null);
   const [logs, setLogs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState(null);
+
+  const totalPages = Math.max(1, Math.ceil(logs.length / LOGS_PAGE_SIZE));
+  const paginatedLogs = logs.slice(
+    (currentPage - 1) * LOGS_PAGE_SIZE,
+    currentPage * LOGS_PAGE_SIZE
+  );
 
   const fetchMetrics = useCallback(async (showRefreshIndicator = false) => {
     try {
@@ -81,6 +90,7 @@ export const Monitoring = () => {
         { label: 'Registered users', value: data.totalUsers?.toString() || '0' },
       ]);
       setLogs(data.logs || []);
+      setCurrentPage(1);
     } catch (err) {
       setError('Failed to load system metrics. Please try again.');
       console.error(err);
@@ -93,6 +103,10 @@ export const Monitoring = () => {
   useEffect(() => {
     fetchMetrics();
   }, [fetchMetrics]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div>
@@ -146,7 +160,7 @@ export const Monitoring = () => {
           </div>
         )}
         
-        {logs.map((log) => (
+        {paginatedLogs.map((log) => (
           <div key={log.id} className={`${dashboardTableRowClass} ${LOGS_GRID} text-[13px]`}>
             <div className={dashboardTableCellMutedClass}>{formatLogTimestamp(log.timestamp)}</div>
             <div>{log.event}</div>
@@ -158,6 +172,13 @@ export const Monitoring = () => {
             </div>
           </div>
         ))}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={logs.length}
+          pageSize={LOGS_PAGE_SIZE}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
