@@ -15,6 +15,6 @@ export const DashboardPageHeader = ({ eyebrow, title, description, action }) => 
         <p className={`${dashboardPageDescriptionClass} max-w-[520px]`}>{description}</p>
       )}
     </div>
-    {action && <div className="shrink-0">{action}</div>}
+    {action && <div className="w-full shrink-0 md:w-auto [&_button]:w-full md:[&_button]:w-auto">{action}</div>}
   </header>
 );

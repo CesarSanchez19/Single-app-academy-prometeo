@@ -51,8 +51,8 @@ export const Pagination = ({
     }`;
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[rgba(14,21,32,0.08)] bg-[#fafbfc] px-5 py-3.5">
-      <p className="text-[13px] text-[#8d9aad]">
+    <div className="mt-0 flex flex-col items-center gap-3 border-t border-[rgba(14,21,32,0.08)] bg-[#fafbfc] px-4 py-3.5 max-md:mt-3 max-md:rounded-xl max-md:border max-md:border-[rgba(14,21,32,0.08)] sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:px-5">
+      <p className="text-center text-[13px] text-[#8d9aad] sm:text-left">
         Showing{' '}
         <span className="font-semibold text-[#5a6a7e]">{startItem}</span>
         {' – '}

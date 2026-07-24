@@ -16,8 +16,11 @@ import {
   dashboardTableCellMutedClass,
 } from '@/styles/prometeoStyleClasses.js';
 
-const LOGS_GRID = 'grid-cols-[1.1fr_2.4fr_1.2fr_0.9fr]';
+const LOGS_GRID = 'md:grid-cols-[1.1fr_2.4fr_1.2fr_0.9fr]';
 const LOGS_PAGE_SIZE = 10;
+
+const mobileFieldLabelClass =
+  'mb-1 text-[11px] font-bold uppercase tracking-[0.06em] text-[#8d9aad] md:hidden';
 
 const formatLogTimestamp = (dateString) => {
   if (!dateString) return '';
@@ -146,8 +149,8 @@ export const Monitoring = () => {
         )}
       </div>
 
-      <div className={dashboardTablePanelClass}>
-        <div className={`${dashboardTableHeadClass} ${LOGS_GRID}`}>
+      <div className={`${dashboardTablePanelClass} max-md:border-0 max-md:bg-transparent max-md:shadow-none`}>
+        <div className={`${dashboardTableHeadClass} ${LOGS_GRID} hidden md:grid`}>
           <div>Timestamp</div>
           <div>Event</div>
           <div>User</div>
@@ -155,23 +158,38 @@ export const Monitoring = () => {
         </div>
 
         {logs.length === 0 && !isLoading && (
-          <div className="p-8 text-center text-slate-500 text-sm">
+          <div className="rounded-2xl border border-[rgba(14,21,32,0.08)] bg-white p-8 text-center text-sm text-slate-500 md:border-0 md:bg-transparent">
             No system logs recorded yet.
           </div>
         )}
         
+        <div className="max-md:space-y-3">
         {paginatedLogs.map((log) => (
-          <div key={log.id} className={`${dashboardTableRowClass} ${LOGS_GRID} text-[13px]`}>
-            <div className={dashboardTableCellMutedClass}>{formatLogTimestamp(log.timestamp)}</div>
-            <div>{log.event}</div>
-            <div className={dashboardTableCellMutedClass}>{log.user}</div>
+          <div
+            key={log.id}
+            className={`${dashboardTableRowClass} max-md:mx-0 max-md:rounded-xl max-md:border max-md:border-[rgba(14,21,32,0.08)] max-md:bg-white max-md:p-4 max-md:shadow-[0_1px_2px_rgba(14,21,32,0.04)] max-md:last:border-b md:grid ${LOGS_GRID} text-[13px]`}
+          >
             <div>
+              <p className={mobileFieldLabelClass}>Timestamp</p>
+              <div className={dashboardTableCellMutedClass}>{formatLogTimestamp(log.timestamp)}</div>
+            </div>
+            <div>
+              <p className={mobileFieldLabelClass}>Event</p>
+              <div>{log.event}</div>
+            </div>
+            <div>
+              <p className={mobileFieldLabelClass}>User</p>
+              <div className={dashboardTableCellMutedClass}>{log.user}</div>
+            </div>
+            <div>
+              <p className={mobileFieldLabelClass}>Severity</p>
               <StatusBadge variant={severityVariant[log.severity]}>
                 {severityLabel[log.severity]}
               </StatusBadge>
             </div>
           </div>
         ))}
+        </div>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
