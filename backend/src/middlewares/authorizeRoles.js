@@ -10,7 +10,7 @@ export const authorizeRoles = (...allowedRoles) => {
         severity: "warning",
       });
       return next(
-        new ForbiddenError("No tienes permisos para acceder a este recurso")
+        new ForbiddenError("You do not have permission to access this resource.")
       );
     }
     next();

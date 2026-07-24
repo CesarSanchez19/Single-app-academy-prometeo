@@ -5,7 +5,7 @@ export const PublicFooter = () => {
     <footer className={publicFooterClass}>
       <div className={publicFooterInnerClass}>
         <p className={footerTextClass}>
-          © 2026 Prometeo by Galetics. Todos los derechos reservados.
+          © 2026 Prometeo by Galetics. All rights reserved.
         </p>
       </div>
     </footer>

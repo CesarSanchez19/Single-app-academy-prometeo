@@ -69,7 +69,7 @@ export const DashboardHome = () => {
         const res = await dashboardService.getUserDashboard();
         setData(res);
       } catch (err) {
-        console.error("Error cargando el dashboard:", err);
+        console.error("Error loading the dashboard:", err);
       } finally {
         setLoading(false);
       }

@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
-import { Menu } from 'lucide-react';
-import { Sidebar } from './Sidebar.jsx';
+import { useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import { Menu } from "lucide-react";
+import { Sidebar } from "./Sidebar.jsx";
 import {
   DashboardSidebarProvider,
   useDashboardSidebar,
-} from '@/context/DashboardSidebarContext.jsx';
+} from "@/context/DashboardSidebarContext.jsx";
 import {
   dashboardShellClass,
   dashboardMainClass,
@@ -14,7 +14,8 @@ import {
   dashboardMobileMenuButtonClass,
   dashboardSidebarBackdropClass,
   dashboardSidebarBrandClass,
-} from '@/styles/prometeoStyleClasses.js';
+} from "@/styles/prometeoStyleClasses.js";
+import { getSessions } from "@/services/session.service.js";
 
 const DashboardLayoutContent = () => {
   const location = useLocation();
@@ -23,6 +24,14 @@ const DashboardLayoutContent = () => {
   useEffect(() => {
     closeMobile();
   }, [location.pathname, closeMobile]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getSessions().catch(() => {});
+    }, 8000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className={dashboardShellClass}>
