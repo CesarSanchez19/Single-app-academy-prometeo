@@ -104,6 +104,11 @@ export const loginUser = async ({ email, password, userAgent = "", ip = "Unknown
   const refreshExpiresMs = parseExpiration(env.jwtRefreshExpiresIn);
   const expiresAt = new Date(Date.now() + refreshExpiresMs);
 
+  await Token.updateMany(
+    { userId: user._id, context: "session", revoked: false },
+    { revoked: true }
+  );
+  
   const tokenDoc = await Token.create({
     userId: user._id,
     tokenHash,
