@@ -17,7 +17,7 @@ import {
 } from '@/styles/prometeoStyleClasses.js';
 
 const LOGS_GRID = 'md:grid-cols-[1.1fr_2.4fr_1.2fr_0.9fr]';
-const LOGS_PAGE_SIZE = 10;
+const LOGS_PAGE_SIZE = 15;
 
 const mobileFieldLabelClass =
   'mb-1 text-[11px] font-bold uppercase tracking-[0.06em] text-[#8d9aad] md:hidden';

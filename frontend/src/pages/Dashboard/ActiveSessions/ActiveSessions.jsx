@@ -18,7 +18,7 @@ import {
 
 const SESSIONS_GRID =
   'md:grid-cols-[2fr_1.4fr_1fr_1fr_0.9fr] xl:grid-cols-[2fr_1.4fr_1fr_1fr_0.9fr]';
-const SESSIONS_PAGE_SIZE = 10;
+const SESSIONS_PAGE_SIZE = 15;
 
 const mobileFieldLabelClass =
   'mb-1 text-[11px] font-bold uppercase tracking-[0.06em] text-[#8d9aad] md:hidden';

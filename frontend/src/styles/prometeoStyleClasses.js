@@ -439,7 +439,7 @@ export const dashboardPageWrapperClass =
 // --- Dashboard: sidebar ---
 
 export const dashboardSidebarClass =
-  "sticky top-0 z-40 flex h-screen w-[260px] shrink-0 flex-col border-r border-[rgba(14,21,32,0.08)] bg-white transition-[width,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:-translate-x-full max-md:shadow-[0_18px_40px_-18px_rgba(14,21,32,0.35)]";
+  "z-40 flex h-screen w-[260px] flex-col border-r border-[rgba(14,21,32,0.08)] bg-white transition-[width,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:-translate-x-full max-md:shadow-[0_18px_40px_-18px_rgba(14,21,32,0.35)] md:sticky md:top-0 md:shrink-0 md:translate-x-0";
 
 export const dashboardSidebarCollapsedClass = "md:w-[72px]";
 
@@ -622,7 +622,7 @@ export const profileHeaderClass = "mb-5 flex items-center gap-4";
 
 export const profileMetaLabelClass = "mb-1.5 text-xs text-[#8d9aad]";
 
-export const profileStackClass = "flex max-w-[560px] flex-col gap-4";
+export const profileStackClass = "flex w-full flex-col gap-4";
 
 export const profileSectionClass = dashboardCardClass;
 
