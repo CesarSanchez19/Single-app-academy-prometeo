@@ -17,8 +17,11 @@ import {
 } from '@/styles/prometeoStyleClasses.js';
 
 const SESSIONS_GRID =
-  'grid-cols-[2fr_1.4fr_1fr_1fr_0.9fr] max-xl:grid-cols-[1.5fr_1.2fr_1fr_1fr_0.9fr]';
-const SESSIONS_PAGE_SIZE = 10;
+  'md:grid-cols-[2fr_1.4fr_1fr_1fr_0.9fr] xl:grid-cols-[2fr_1.4fr_1fr_1fr_0.9fr]';
+const SESSIONS_PAGE_SIZE = 15;
+
+const mobileFieldLabelClass =
+  'mb-1 text-[11px] font-bold uppercase tracking-[0.06em] text-[#8d9aad] md:hidden';
 
 const timeSince = (dateString) => {
   if (!dateString) return 'Unknown';
@@ -135,8 +138,8 @@ export const ActiveSessions = () => {
         }
       />
 
-      <div className={dashboardTablePanelClass}>
-        <div className={`${dashboardTableHeadClass} ${SESSIONS_GRID}`}>
+      <div className={`${dashboardTablePanelClass} max-md:border-0 max-md:bg-transparent max-md:shadow-none`}>
+        <div className={`${dashboardTableHeadClass} ${SESSIONS_GRID} hidden md:grid`}>
           <div>Device</div>
           <div>Location / IP</div>
           <div>Last activity</div>
@@ -145,35 +148,50 @@ export const ActiveSessions = () => {
         </div>
 
         {isLoading ? (
-          <div className="p-8 text-center text-slate-500">
+          <div className="rounded-2xl border border-[rgba(14,21,32,0.08)] bg-white p-8 text-center text-slate-500 md:border-0 md:bg-transparent">
             <Loader2 className="animate-spin mx-auto mb-2 text-slate-400" size={24} />
             <p>Loading sessions...</p>
           </div>
         ) : error && sessions.length === 0 ? (
-          <div className="p-8 text-center text-red-500">
+          <div className="rounded-2xl border border-[rgba(14,21,32,0.08)] bg-white p-8 text-center text-red-500 md:border-0 md:bg-transparent">
             <p>{error}</p>
           </div>
         ) : sessions.length === 0 ? (
-          <div className="p-8 text-center text-slate-500">
+          <div className="rounded-2xl border border-[rgba(14,21,32,0.08)] bg-white p-8 text-center text-slate-500 md:border-0 md:bg-transparent">
             <p>No active sessions found.</p>
           </div>
         ) : (
-          paginatedSessions.map((session) => {
+          <div className="max-md:space-y-3">
+          {paginatedSessions.map((session) => {
             const isCurrent = session.id === currentTokenId;
             
             return (
-              <div key={session.id} className={`${dashboardTableRowClass} ${SESSIONS_GRID}`}>
-                <div>{`${session.device.browser} on ${session.device.os}`}</div>
-                <div className={dashboardTableCellMutedClass}>{session.ipAddress}</div>
-                <div className={dashboardTableCellMutedClass}>{timeSince(session.lastActiveAt)}</div>
+              <div
+                key={session.id}
+                className={`${dashboardTableRowClass} max-md:mx-0 max-md:rounded-xl max-md:border max-md:border-[rgba(14,21,32,0.08)] max-md:bg-white max-md:p-4 max-md:shadow-[0_1px_2px_rgba(14,21,32,0.04)] max-md:last:border-b md:grid ${SESSIONS_GRID}`}
+              >
                 <div>
+                  <p className={mobileFieldLabelClass}>Device</p>
+                  <div>{`${session.device.browser} on ${session.device.os}`}</div>
+                </div>
+                <div>
+                  <p className={mobileFieldLabelClass}>Location / IP</p>
+                  <div className={dashboardTableCellMutedClass}>{session.ipAddress}</div>
+                </div>
+                <div>
+                  <p className={mobileFieldLabelClass}>Last activity</p>
+                  <div className={dashboardTableCellMutedClass}>{timeSince(session.lastActiveAt)}</div>
+                </div>
+                <div>
+                  <p className={mobileFieldLabelClass}>Status</p>
                   {isCurrent ? (
                     <StatusBadge variant="success">Current session</StatusBadge>
                   ) : (
                     <StatusBadge variant="neutral">Active</StatusBadge>
                   )}
                 </div>
-                <div>
+                <div className="max-md:pt-1">
+                  <p className={mobileFieldLabelClass}>Action</p>
                   <button 
                     type="button" 
                     className={dashboardDestructiveButtonClass}
@@ -187,7 +205,8 @@ export const ActiveSessions = () => {
                 </div>
               </div>
             );
-          })
+          })}
+          </div>
         )}
         <Pagination
           currentPage={currentPage}

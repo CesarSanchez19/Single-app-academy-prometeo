@@ -434,21 +434,37 @@ export const dashboardMainClass =
   "flex min-w-0 flex-1 flex-col";
 
 export const dashboardPageWrapperClass =
-  "w-full flex-1 px-6 py-5 max-[480px]:px-4 max-[480px]:py-4";
+  "w-full flex-1 px-6 py-5 max-md:px-4 max-md:py-4 max-[480px]:px-4 max-[480px]:py-4";
 
 // --- Dashboard: sidebar ---
 
 export const dashboardSidebarClass =
-  "sticky top-0 flex h-screen w-[260px] shrink-0 flex-col border-r border-[rgba(14,21,32,0.08)] bg-white";
+  "z-40 flex h-screen w-[260px] flex-col border-r border-[rgba(14,21,32,0.08)] bg-white transition-[width,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:-translate-x-full max-md:shadow-[0_18px_40px_-18px_rgba(14,21,32,0.35)] md:sticky md:top-0 md:shrink-0 md:translate-x-0";
+
+export const dashboardSidebarCollapsedClass = "md:w-[72px]";
+
+export const dashboardSidebarMobileOpenClass = "max-md:translate-x-0";
+
+export const dashboardSidebarBackdropClass =
+  "fixed inset-0 z-30 bg-[rgba(14,21,32,0.45)] md:hidden";
+
+export const dashboardMobileTopBarClass =
+  "sticky top-0 z-20 flex h-14 shrink-0 items-center gap-3 border-b border-[rgba(14,21,32,0.08)] bg-white px-4 md:hidden";
+
+export const dashboardMobileMenuButtonClass =
+  "inline-flex size-10 cursor-pointer items-center justify-center rounded-lg border border-[rgba(14,21,32,0.14)] bg-white text-[#243044] transition-[color,border-color,transform] duration-150 hover:border-[rgba(14,21,32,0.22)] hover:text-[#b85c28] active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] motion-reduce:transition-none motion-reduce:active:scale-100";
+
+export const dashboardSidebarToggleButtonClass =
+  "hidden size-10 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-[rgba(14,21,32,0.14)] bg-white text-[#243044] transition-[color,border-color,transform] duration-150 hover:border-[rgba(14,21,32,0.22)] hover:text-[#b85c28] active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] md:inline-flex motion-reduce:transition-none motion-reduce:active:scale-100";
 
 export const dashboardSidebarHeaderClass =
-  "border-b border-[rgba(14,21,32,0.08)] px-6 py-6";
+  "flex items-center justify-between gap-2 border-b border-[rgba(14,21,32,0.08)] px-4 py-5 md:px-6 md:py-6";
 
 export const dashboardSidebarBrandClass =
-  "font-['Fraunces',Georgia,serif] text-xl font-semibold tracking-[-0.02em] text-[#0e1520]";
+  "truncate font-['Fraunces',Georgia,serif] text-xl font-semibold tracking-[-0.02em] text-[#0e1520]";
 
 export const dashboardSidebarContentClass =
-  "flex flex-1 flex-col overflow-y-auto p-4";
+  "flex flex-1 flex-col overflow-y-auto p-3 md:p-4";
 
 export const dashboardSidebarSectionClass = "mb-6";
 
@@ -460,14 +476,19 @@ export const dashboardSidebarNavClass = "flex flex-col gap-1";
 export const dashboardSidebarLinkClass =
   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#5a6a7e] no-underline transition-[color,background-color] duration-150 hover:bg-[#f4f6f8] hover:text-[#243044] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] motion-reduce:transition-none";
 
+export const dashboardSidebarLinkCollapsedClass =
+  "justify-center px-0";
+
 export const dashboardSidebarLinkActiveClass =
   "bg-[rgba(184,92,40,0.1)] text-[#b85c28] hover:bg-[rgba(184,92,40,0.14)] hover:text-[#9a4a1f]";
 
 export const dashboardSidebarFooterClass =
-  "mt-auto border-t border-[rgba(14,21,32,0.08)] p-4";
+  "mt-auto border-t border-[rgba(14,21,32,0.08)] p-3 md:p-4";
 
 export const dashboardLogoutButtonClass =
   "inline-flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-lg border border-[rgba(14,21,32,0.08)] bg-[rgba(255,255,255,0.65)] px-4 py-2.5 text-sm font-semibold leading-none text-[#243044] transition-[color,background-color,border-color,transform] duration-150 hover:border-[rgba(14,21,32,0.14)] hover:bg-white active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(184,92,40,0.35)] motion-reduce:transition-none motion-reduce:active:scale-100";
+
+export const dashboardLogoutButtonCollapsedClass = "px-0";
 
 export const dashboardSidebarAdminSectionClass =
   "mt-3.5 border-t border-[rgba(14,21,32,0.08)] pt-3.5";
@@ -479,7 +500,7 @@ export const dashboardPageTitleClass = titleClass;
 export const dashboardPageDescriptionClass = descriptionClass;
 
 export const dashboardPageHeaderClass =
-  "mb-5 flex flex-wrap items-start justify-between gap-3";
+  "mb-5 flex flex-col items-stretch gap-3 md:flex-row md:flex-wrap md:items-start md:justify-between";
 
 export const dashboardPageIntroClass = "mb-5";
 
@@ -601,7 +622,7 @@ export const profileHeaderClass = "mb-5 flex items-center gap-4";
 
 export const profileMetaLabelClass = "mb-1.5 text-xs text-[#8d9aad]";
 
-export const profileStackClass = "flex max-w-[560px] flex-col gap-4";
+export const profileStackClass = "flex w-full flex-col gap-4";
 
 export const profileSectionClass = dashboardCardClass;
 
