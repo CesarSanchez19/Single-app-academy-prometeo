@@ -315,10 +315,10 @@ export const aboutHeadLeadClass =
   "max-w-[62ch] text-[15px] leading-[1.7] text-[#5a6a7e] text-pretty";
 
 export const carouselViewportClass =
-  "relative h-[452px] w-full overflow-hidden max-[640px]:h-[408px]";
+  "relative h-[572px] w-full overflow-hidden max-[640px]:h-[504px]";
 
 export const carouselCardClass =
-  "absolute top-6 left-1/2 flex h-[392px] w-[320px] flex-col overflow-hidden rounded-2xl border border-[rgba(14,21,32,0.08)] bg-white transition-[transform,opacity,box-shadow] duration-500 ease-out will-change-transform motion-reduce:transition-none max-[640px]:h-[352px] max-[640px]:w-[268px]";
+  "absolute top-6 left-1/2 flex h-[512px] w-[320px] flex-col overflow-hidden rounded-2xl border border-[rgba(14,21,32,0.08)] bg-white transition-[transform,opacity,box-shadow] duration-500 ease-out will-change-transform motion-reduce:transition-none max-[640px]:h-[448px] max-[640px]:w-[268px]";
 
 export const carouselCardActiveClass =
   "z-20 -translate-x-1/2 scale-100 opacity-100 shadow-[0_0_0_1px_rgba(14,21,32,0.04),0_26px_50px_-22px_rgba(14,21,32,0.38)]";
@@ -339,9 +339,9 @@ export const carouselCardHiddenClass =
   "pointer-events-none z-0 -translate-x-1/2 scale-[0.7] opacity-0 shadow-none";
 
 export const memberPhotoWrapClass =
-  "h-[204px] w-full shrink-0 overflow-hidden border-b border-[rgba(14,21,32,0.08)] bg-[#dfe5ec] max-[640px]:h-[178px]";
+  "h-[324px] w-full shrink-0 overflow-hidden border-b border-[rgba(14,21,32,0.08)] bg-[#dfe5ec] max-[640px]:h-[272px]";
 
-export const memberPhotoClass = "size-full object-cover";
+  export const memberPhotoClass = "size-full object-cover";
 
 export const memberPhotoFallbackClass =
   "flex size-full items-center justify-center font-['Fraunces',Georgia,serif] text-[40px] leading-none font-semibold tracking-[-0.02em] text-[#8d9aad] select-none";

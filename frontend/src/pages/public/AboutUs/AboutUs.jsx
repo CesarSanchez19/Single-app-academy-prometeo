@@ -1,6 +1,14 @@
 ﻿import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight, Code2, FileText, Server } from 'lucide-react';
+import photoEnrique from '@/assets/FEnrique.webp';
+import photoAlexis from '@/assets/FAlexis.webp';
+import photoCesar from '@/assets/FCesar.webp';
+import photoYair from '@/assets/FYair.webp';
+import photoAaron from '@/assets/FAaron.webp';
+import photoTadeo from '@/assets/FTadeo.webp';
+import photoIvan from '@/assets/FIvan.webp';
+import photoAdriel from '@/assets/FBig.webp';
 import {
   aboutStackClass,
   aboutSectionClass,
@@ -56,14 +64,14 @@ const roles = {
 };
 
 const team = [
-  { id: '2302045', name: 'Enrique Castillo Rodríguez', role: 'frontend', photo: null },
-  { id: '2302117', name: 'Alexis Alfredo Bustos Rodríguez', role: 'frontend', photo: null },
-  { id: '2302073', name: 'Cesar David Sánchez Trejo', role: 'backend', photo: null },
-  { id: '2302133', name: 'Yair Gamaliel Guzmán Pérez', role: 'backend', photo: null },
-  { id: '2302042', name: 'Aarón de Jesús Santos Absalón', role: 'docs', photo: null },
-  { id: '2302061', name: 'Jorge Tadeo Aviles Pérez', role: 'docs', photo: null },
-  { id: '2302142', name: 'Jesús Iván Tamay Balam', role: 'docs', photo: null },
-  { id: '2302019', name: 'Adriel Arturo Solano Peraza', role: 'docs', photo: null },
+  { id: '2302045', name: 'Enrique Castillo Rodríguez', role: 'frontend', photo: photoEnrique },
+  { id: '2302117', name: 'Alexis Alfredo Bustos Rodríguez', role: 'frontend', photo: photoAlexis },
+  { id: '2302073', name: 'Cesar David Sánchez Trejo', role: 'backend', photo: photoCesar },
+  { id: '2302133', name: 'Yair Gamaliel Guzmán Pérez', role: 'backend', photo: photoYair },
+  { id: '2302042', name: 'Aarón de Jesús Santos Absalón', role: 'docs', photo: photoAaron },
+  { id: '2302061', name: 'Jorge Tadeo Aviles Pérez', role: 'docs', photo: photoTadeo },
+  { id: '2302142', name: 'Jesús Iván Tamay Balam', role: 'docs', photo: photoIvan },
+  { id: '2302019', name: 'Adriel Arturo Solano Peraza', role: 'docs', photo: photoAdriel },
 ];
 
 const metrics = [
